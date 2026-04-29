@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasfiqur Rahman — Portfolio
 
-## Getting Started
+Personal portfolio for **Mohammed Tasfiqur Rahman**, Unreal Engine developer (Dhaka, BD).
 
-First, run the development server:
+## Stack
+
+- **Framework**: Next.js 14 (App Router) + React 18 + TypeScript
+- **Styling**: Tailwind CSS + shadcn-style design tokens (HSL CSS variables)
+- **Motion**: Framer Motion + GSAP
+- **3D**: Three.js (custom shaders, particle field, nebula)
+- **Theming**: `next-themes` (dark default, system aware)
+- **Icons**: lucide-react
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm run start    # serve production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/
+│   ├── layout.tsx           # root layout, fonts, metadata, ThemeProvider
+│   ├── page.tsx             # composes all sections
+│   └── globals.css          # design tokens + custom utilities
+├── components/
+│   ├── theme-provider.tsx
+│   ├── ui/                  # primitives (button, badge, card,
+│   │                          theme-toggle, spotlight-card,
+│   │                          location-map, qr-code, orbital-skills)
+│   └── sections/            # nav, hero, about, skills, projects,
+│                              experience, contact, footer
+└── lib/
+    ├── utils.ts             # cn() helper
+    └── portfolio-data.ts    # single source of truth for content
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To update content (projects, experience, skills, copy), edit
+[`src/lib/portfolio-data.ts`](src/lib/portfolio-data.ts).
 
-## Learn More
+## Replace before going live
 
-To learn more about Next.js, take a look at the following resources:
+- `public/files/Mohammed_Tasfiqur_Rahman_CV.pdf` — drop your real CV here.
+- The `metadataBase` URL in `src/app/layout.tsx` once the production domain is known.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## References
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The original component sketches that inspired this site live in
+[`_references/`](./_references/). They are not imported by the build.

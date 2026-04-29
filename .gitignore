@@ -31,6 +31,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# project-local skill source (cloned, not part of the app)
+/.claude/skills/_source/
+
+# scratch / clones
+/.tmp/
+
+# raw reference snippets (not used by the build)
+/_references/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
