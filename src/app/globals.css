@@ -83,6 +83,8 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    /* Defensive: prevent any rogue child from creating horizontal scroll on mobile */
+    overflow-x: hidden;
   }
   ::selection {
     @apply bg-primary/30 text-foreground;

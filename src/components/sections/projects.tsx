@@ -42,7 +42,7 @@ function ProjectCard({ project, featured }: { project: Project; featured?: boole
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="group block h-full"
+      className="group block h-full min-w-0"
     >
       <Tilt max={featured ? 6 : 5} lift={featured ? 8 : 6} className="h-full">
         <a
@@ -55,11 +55,11 @@ function ProjectCard({ project, featured }: { project: Project; featured?: boole
             <YouTubeThumb id={project.youtubeId} alt={project.title} />
             <div className="mt-5 flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                  <span>{project.year}</span>
-                  <span>·</span>
-                  <span className="truncate">{project.subtitle}</span>
-                </div>
+                <div className="mb-2 flex min-w-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              <span className="shrink-0">{project.year}</span>
+              <span className="shrink-0">·</span>
+              <span className="min-w-0 flex-1 truncate">{project.subtitle}</span>
+            </div>
                 <h3
                   className={`truncate font-bold tracking-tight ${
                     featured ? "text-xl sm:text-2xl" : "text-lg"
