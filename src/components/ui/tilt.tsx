@@ -28,6 +28,13 @@ export const Tilt = React.forwardRef<HTMLDivElement, TiltProps>(
     const localRef = React.useRef<HTMLDivElement>(null);
     React.useImperativeHandle(forwardedRef, () => localRef.current!);
 
+    // Disable on coarse-pointer (touch) devices — tilt on scroll feels broken
+    const [enabled, setEnabled] = React.useState(false);
+    React.useEffect(() => {
+      if (typeof window === "undefined") return;
+      setEnabled(window.matchMedia("(pointer: fine)").matches);
+    }, []);
+
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const sx = useSpring(x, { stiffness: 200, damping: 20, mass: 0.5 });
@@ -38,6 +45,7 @@ export const Tilt = React.forwardRef<HTMLDivElement, TiltProps>(
     const sLift = useSpring(liftZ, { stiffness: 250, damping: 22 });
 
     const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!enabled) return;
       const rect = localRef.current?.getBoundingClientRect();
       if (!rect) return;
       const px = (e.clientX - rect.left) / rect.width - 0.5;
@@ -45,7 +53,7 @@ export const Tilt = React.forwardRef<HTMLDivElement, TiltProps>(
       x.set(px);
       y.set(py);
     };
-    const onEnter = () => liftZ.set(lift);
+    const onEnter = () => enabled && liftZ.set(lift);
     const onLeave = () => {
       x.set(0);
       y.set(0);

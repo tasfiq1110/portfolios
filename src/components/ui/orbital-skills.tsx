@@ -18,6 +18,20 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const orbitRef = React.useRef<HTMLDivElement>(null);
 
+  // Responsive radius: scale down on narrow screens so nodes don't get clipped
+  const [radius, setRadius] = React.useState(200);
+  React.useEffect(() => {
+    const update = () => {
+      const w = containerRef.current?.clientWidth ?? 800;
+      // Reserve room for the expanded card popping above each node + label.
+      // 0.32 of width keeps nodes inside, capped at 200 on desktop.
+      setRadius(Math.max(110, Math.min(200, w * 0.32)));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   React.useEffect(() => {
     if (!auto) return;
     const t = setInterval(() => setAngle((a) => (a + 0.25) % 360), 50);
@@ -61,7 +75,6 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
 
   const positionFor = (i: number, n: number) => {
     const a = ((i / n) * 360 + angle) % 360;
-    const radius = 200;
     const rad = (a * Math.PI) / 180;
     const x = radius * Math.cos(rad);
     const y = radius * Math.sin(rad);
@@ -78,7 +91,7 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
   return (
     <div
       ref={containerRef}
-      className="relative h-[640px] w-full overflow-hidden rounded-2xl border border-border bg-gradient-to-b from-card/50 to-background"
+      className="relative h-[560px] w-full overflow-hidden rounded-2xl border border-border bg-gradient-to-b from-card/50 to-background sm:h-[640px]"
       onClick={onContainerClick}
     >
       {/* ambient glow */}
@@ -106,8 +119,11 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
             <span className="font-mono text-xs font-bold text-primary-foreground">UE</span>
           </div>
 
-          {/* Orbit ring */}
-          <div className="absolute h-[400px] w-[400px] rounded-full border border-border/40" />
+          {/* Orbit ring (scales with computed radius) */}
+          <div
+            className="absolute rounded-full border border-border/40"
+            style={{ width: radius * 2, height: radius * 2 }}
+          />
 
           {data.map((item, i) => {
             const pos = positionFor(i, data.length);
@@ -168,7 +184,7 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
                 </div>
 
                 {isExp && (
-                  <Card className="absolute left-1/2 top-24 w-72 -translate-x-1/2 overflow-visible border-border/70 bg-popover/95 shadow-xl backdrop-blur-md">
+                  <Card className="absolute left-1/2 top-24 w-[min(17rem,80vw)] -translate-x-1/2 overflow-visible border-border/70 bg-popover/95 shadow-xl backdrop-blur-md">
                     <span className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2 bg-border" />
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">

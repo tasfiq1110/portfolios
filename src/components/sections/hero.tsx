@@ -395,7 +395,6 @@ export function Hero() {
     const cta = ctaRef.current;
     const socials = socialsRef.current;
     const scrollCue = scrollCueRef.current;
-    const chars = title ? title.querySelectorAll(".title-char") : null;
 
     const animatable = [badge, tagline, cta, socials, scrollCue].filter(
       Boolean
@@ -411,22 +410,6 @@ export function Hero() {
         badge,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-      );
-    }
-
-    if (chars) {
-      gsap.set(chars, { clearProps: "all" });
-      tl.fromTo(
-        chars,
-        { y: 80, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.04,
-          ease: "power4.out",
-        },
-        "-=0.4"
       );
     }
 
@@ -469,7 +452,6 @@ export function Hero() {
         Boolean
       ) as HTMLElement[];
       gsap.set(all, { clearProps: "all" });
-      if (chars) gsap.set(chars, { clearProps: "all" });
     };
   }, []);
 
@@ -602,7 +584,7 @@ export function Hero() {
 
         <h1
           ref={titleRef}
-          className="mb-6 block text-balance text-center font-display text-[clamp(2.25rem,7.2vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+          className="title-rise mb-6 block text-balance text-center font-display text-[clamp(2.25rem,7.2vw,6.5rem)] font-bold leading-[0.95] tracking-[-0.04em]"
           style={{
             backgroundImage:
               "linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.55) 100%)",
