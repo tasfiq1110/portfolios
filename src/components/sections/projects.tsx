@@ -9,6 +9,37 @@ import { Tilt } from "@/components/ui/tilt";
 import { Badge } from "@/components/ui/badge";
 import { projects, type Project } from "@/lib/portfolio-data";
 
+/**
+ * A single "WATCH ▶" pill that follows the cursor while hovering any project
+ * card. Hidden on touch devices. Gives the project grid a gamified, tactile
+ * feel without per-card state.
+ */
+function WatchCue() {
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    const cue = ref.current;
+    if (!cue) return;
+
+    const onMove = (e: PointerEvent) => {
+      const card = (e.target as HTMLElement)?.closest("[data-project-card]");
+      cue.setAttribute("data-active", String(!!card));
+      cue.style.left = `${e.clientX}px`;
+      cue.style.top = `${e.clientY}px`;
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
+
+  return (
+    <div ref={ref} className="watch-cue" data-active="false" aria-hidden>
+      <Play size={11} className="fill-current" />
+      Watch
+    </div>
+  );
+}
+
 function YouTubeThumb({ id, alt }: { id: string; alt: string }) {
   const [loaded, setLoaded] = React.useState(false);
   return (
@@ -50,6 +81,7 @@ function ProjectCard({ project, featured }: { project: Project; featured?: boole
           target="_blank"
           rel="noreferrer"
           className="block h-full"
+          data-project-card
         >
           <GlowCard glowColor={project.glow} className="h-full p-5 sm:p-6">
             <YouTubeThumb id={project.youtubeId} alt={project.title} />
@@ -99,6 +131,7 @@ export function Projects() {
 
   return (
     <section id="projects" className="relative py-24 sm:py-32">
+      <WatchCue />
       <div className="container mx-auto">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading
