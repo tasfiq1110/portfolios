@@ -258,3 +258,65 @@
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
+
+/* ============================================================
+   Iconic interaction layer — magnetic title, grain, glow pulse
+   ============================================================ */
+
+/* Smooth spring-back for per-character magnetic title.
+   The pointermove handler sets transforms instantly; this eases the
+   return-to-rest and the colour shift so letters feel elastic. */
+.title-char {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s ease;
+  will-change: transform;
+}
+
+/* Film grain — fine animated noise for tactile depth (2026 texture trend).
+   Sits above everything, ignores pointer events, very low opacity. */
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  width: 200%;
+  height: 200%;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.6s steps(2) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-3%, 2%); }
+  100% { transform: translate(2%, -3%); }
+}
+
+/* Project-card hover cue — a floating "WATCH" label tracks the cursor.
+   Used by the projects section enhancement. */
+.watch-cue {
+  position: fixed;
+  z-index: 95;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.watch-cue[data-active="true"] {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay { animation: none; }
+  .title-char { transition: none; }
+}
