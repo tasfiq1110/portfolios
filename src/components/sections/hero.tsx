@@ -5,6 +5,8 @@ import * as THREE from "three";
 import { gsap } from "gsap";
 import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/ui/magnetic";
+import { ScrambleText } from "@/components/ui/scramble-text";
 import { profile } from "@/lib/portfolio-data";
 
 interface ThreeRefs {
@@ -486,6 +488,55 @@ export function Hero() {
     };
   }, []);
 
+  // ---- Per-character magnetic repulsion on the title ----
+  // Letters lean away from the cursor with a smooth falloff, then spring back.
+  React.useEffect(() => {
+    const title = titleRef.current;
+    if (!title) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const chars = Array.from(
+      title.querySelectorAll<HTMLElement>(".title-char")
+    );
+    const RADIUS = 120;
+    const FORCE = 26;
+
+    const onMove = (e: PointerEvent) => {
+      chars.forEach((c) => {
+        const r = c.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = cx - e.clientX;
+        const dy = cy - e.clientY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < RADIUS) {
+          const f = (1 - dist / RADIUS) * FORCE;
+          const ang = Math.atan2(dy, dx);
+          c.style.transform = `translate(${Math.cos(ang) * f}px, ${
+            Math.sin(ang) * f
+          }px)`;
+          c.style.color = "rgba(16,185,129,0.95)";
+        } else {
+          c.style.transform = "translate(0,0)";
+          c.style.color = "";
+        }
+      });
+    };
+    const onLeave = () => {
+      chars.forEach((c) => {
+        c.style.transform = "translate(0,0)";
+        c.style.color = "";
+      });
+    };
+
+    title.addEventListener("pointermove", onMove);
+    title.addEventListener("pointerleave", onLeave);
+    return () => {
+      title.removeEventListener("pointermove", onMove);
+      title.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
   // Wrap each word in inline-block + whitespace-nowrap so individual chars
   // never break mid-word — line breaks can only happen between words.
   const splitWords = (text: string) => {
@@ -543,7 +594,7 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-20 z-10 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.4em] text-white/30"
       >
-        UE5 ▸ C++ ▸ NIAGARA ▸ LUMEN ▸ NANITE ▸ VR
+        <ScrambleText text="UE5 ▸ C++ ▸ NIAGARA ▸ LUMEN ▸ NANITE ▸ VR" speed={22} />
       </div>
 
       {/* Coordinate HUD corners */}
@@ -578,7 +629,7 @@ export function Hero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300">
-            {profile.role}
+            <ScrambleText text={profile.role} speed={30} />
           </span>
         </div>
 
@@ -605,57 +656,67 @@ export function Hero() {
         </p>
 
         <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="xl" className="group">
-            <a href="#projects">
-              View Projects
-              <ArrowUpRight
-                size={18}
-                className="ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-          </Button>
-          <Button
-            asChild
-            size="xl"
-            variant="outline"
-            className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white"
-          >
-            <a href="#contact">
-              <Mail size={16} className="mr-2" />
-              Get in touch
-            </a>
-          </Button>
+          <Magnetic strength={0.35}>
+            <Button asChild size="xl" className="group">
+              <a href="#projects">
+                View Projects
+                <ArrowUpRight
+                  size={18}
+                  className="ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            </Button>
+          </Magnetic>
+          <Magnetic strength={0.35}>
+            <Button
+              asChild
+              size="xl"
+              variant="outline"
+              className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white"
+            >
+              <a href="#contact">
+                <Mail size={16} className="mr-2" />
+                Get in touch
+              </a>
+            </Button>
+          </Magnetic>
         </div>
 
         <div
           ref={socialsRef}
           className="mt-12 flex items-center gap-5 text-zinc-500"
         >
-          <a
-            href={profile.socials.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="transition-colors hover:text-white"
-          >
-            <Github size={18} />
-          </a>
-          <a
-            href={profile.socials.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-            className="transition-colors hover:text-white"
-          >
-            <Linkedin size={18} />
-          </a>
-          <a
-            href={`mailto:${profile.email}`}
-            aria-label="Email"
-            className="transition-colors hover:text-white"
-          >
-            <Mail size={18} />
-          </a>
+          <Magnetic strength={0.5} as="span">
+            <a
+              href={profile.socials.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="block transition-colors hover:text-white"
+            >
+              <Github size={18} />
+            </a>
+          </Magnetic>
+          <Magnetic strength={0.5} as="span">
+            <a
+              href={profile.socials.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="block transition-colors hover:text-white"
+            >
+              <Linkedin size={18} />
+            </a>
+          </Magnetic>
+          <Magnetic strength={0.5} as="span">
+            <a
+              href={`mailto:${profile.email}`}
+              aria-label="Email"
+              className="block transition-colors hover:text-white"
+            >
+              <Mail size={18} />
+            </a>
+          </Magnetic>
         </div>
       </div>
 
