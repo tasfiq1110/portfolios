@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { Cursor } from "@/components/ui/cursor";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Preloader } from "@/components/ui/preloader";
 
 // Per ui-ux-pro-max: "Minimalist Portfolio" pairing — distinctive headers + clean body
 const display = Space_Grotesk({
@@ -71,10 +72,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScroll>
+            <Preloader />
             <ScrollProgress />
             <Cursor />
             {children}
           </SmoothScroll>
+          <div aria-hidden className="grain-overlay" />
         </ThemeProvider>
       </body>
     </html>
