@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s | Tasfiqur Rahman",
   },
   description:
-    "Programmer & Unreal Engine developer specializing in AI systems, single-player narrative games, and VR. 4+ years building AAA-quality experiences in UE4/UE5.",
+    "Programmer & Unreal Engine developer specializing in AI systems, single-player narrative games, and VR. 6+ years building AAA-quality experiences in UE4/UE5.",
   keywords: [
     "Unreal Engine",
     "UE5",
@@ -42,6 +42,8 @@ export const metadata: Metadata = {
     "VR Developer",
     "AI Programmer",
     "Niagara",
+    "Unreal Engine Plugins",
+    "Fab Marketplace",
     "Tasfiqur Rahman",
   ],
   authors: [{ name: "Mohammed Tasfiqur Rahman" }],
