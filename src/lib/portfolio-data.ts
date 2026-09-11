@@ -7,6 +7,8 @@ import {
   Network,
   Code2,
   Workflow,
+  Puzzle,
+  BrainCircuit,
   type LucideIcon,
 } from "lucide-react";
 
@@ -20,12 +22,13 @@ export const profile = {
   coordinates: "23.8103° N, 90.4125° E",
   email: "tasfiqur1110@gmail.com",
   availability: "Open to full-time, contract, and remote work.",
-  experienceYears: 4,
+  experienceYears: 6,
   socials: {
     github: "https://github.com/tasfiq1110",
     linkedin: "https://www.linkedin.com/in/tasfiqur-rahman-2464a8224/",
     facebook: "https://www.facebook.com/tasfiqur.rahman.1110",
     youtube: "https://www.youtube.com/@tasfiq1110",
+    fab: "https://www.fab.com/sellers/Tasfiqur%20Rahman",
   },
   cv: "/files/Mohammed_Tasfiqur_Rahman_CV.pdf",
   photos: {
@@ -36,15 +39,16 @@ export const profile = {
 } as const;
 
 export const summary = [
-  "I'm an Unreal Engine developer with 4+ years of hands-on production experience — shipping AAA-quality, single-player narrative games on Steam, leading teams, and building large-scale Metaverse and VR worlds.",
+  "I'm an Unreal Engine developer with 6+ years of hands-on production experience — shipping AAA-quality, single-player narrative games on Steam, leading teams, and building large-scale Metaverse and VR worlds.",
   "My focus is the moment-to-moment feel of interactive worlds: AI behaviour, gameplay systems, real-time graphics, and the polish that makes a build feel alive.",
+  "I also build and publish Unreal Engine plugins on Fab: offline LLM brains for NPCs, volumetric 3D navigation for flying AI, and in-editor AI sound generation.",
 ];
 
 export const highlights: { label: string; value: string }[] = [
-  { label: "Years in Unreal", value: "4+" },
+  { label: "Years in Unreal", value: "6+" },
   { label: "Shipped on Steam", value: "1" },
   { label: "VR titles", value: "3+" },
-  { label: "Engine", value: "UE4 / UE5" },
+  { label: "Plugins on Fab", value: "3" },
 ];
 
 export type SkillNode = {
@@ -70,7 +74,7 @@ export const skillNodes: SkillNode[] = [
       "Production C++ for gameplay & systems: actor lifecycle, replication, GAS, custom subsystems, optimization pass-throughs.",
     status: "completed",
     energy: 95,
-    relatedIds: [2, 3, 7],
+    relatedIds: [2, 3, 7, 9],
   },
   {
     id: 2,
@@ -94,7 +98,7 @@ export const skillNodes: SkillNode[] = [
       "Behaviour Trees, EQS, blackboards, custom services & decorators. Squad logic, perception graphs, scripted set-pieces.",
     status: "completed",
     energy: 92,
-    relatedIds: [1, 4],
+    relatedIds: [1, 4, 10],
   },
   {
     id: 4,
@@ -156,6 +160,30 @@ export const skillNodes: SkillNode[] = [
     energy: 82,
     relatedIds: [6, 7],
   },
+  {
+    id: 9,
+    title: "Engine Plugins",
+    category: "Tools & Plugins",
+    icon: Puzzle,
+    date: "Published on Fab",
+    content:
+      "UE5 C++ code plugins with Runtime + Editor modules, clean Blueprint & C++ APIs, multithreaded bakes and async queries. Three plugins live on Fab.",
+    status: "completed",
+    energy: 88,
+    relatedIds: [1, 10, 3],
+  },
+  {
+    id: 10,
+    title: "On-Device AI",
+    category: "Tools & Plugins",
+    icon: BrainCircuit,
+    date: "Published on Fab",
+    content:
+      "Offline LLM inference for NPCs (GGUF, crash-isolated helper process, tool calling, grammar-constrained JSON) and text-to-audio generation on Vulkan GPUs.",
+    status: "in-progress",
+    energy: 82,
+    relatedIds: [9, 3],
+  },
 ];
 
 export const skillGroups = [
@@ -183,6 +211,18 @@ export const skillGroups = [
       "Lumen / Nanite Workflow",
       "Performance Optimization",
       "GPU Profiling & Debugging",
+    ],
+  },
+  {
+    name: "Tools & Plugins",
+    icon: Puzzle,
+    skills: [
+      "UE5 Runtime & Editor Plugins",
+      "Fab Marketplace Publishing",
+      "Offline LLM Integration (GGUF)",
+      "3D Pathfinding (Sparse Voxel Octree, A*)",
+      "Multithreading & Async Tasks",
+      "Vulkan GPU Inference",
     ],
   },
   {
@@ -288,6 +328,74 @@ export const projects: Project[] = [
   },
 ];
 
+export type Plugin = {
+  slug: string;
+  title: string;
+  tagline: string;
+  description: string;
+  features: string[];
+  tech: string[];
+  youtubeId: string;
+  link: string;
+  glow: "blue" | "purple" | "green" | "red" | "orange";
+};
+
+export const fabStore = "https://www.fab.com/sellers/Tasfiqur%20Rahman";
+
+export const plugins: Plugin[] = [
+  {
+    slug: "local-mind-ai",
+    title: "Local Mind AI",
+    tagline: "Offline LLM brains for NPCs",
+    description:
+      "Runs a real large language model inside the game, on the player's machine. No cloud service, no API keys, no cost per message.",
+    features: [
+      "Crash-isolated helper process with auto-restart",
+      "Streaming chat, vision input and two-way voice",
+      "Tool calling that triggers gameplay functions",
+      "Grammar-constrained JSON and semantic memory",
+    ],
+    tech: ["UE 5.3–5.7", "C++", "GGUF", "Vulkan"],
+    youtubeId: "tMeCGRFmwsU",
+    link: "https://www.fab.com/listings/33c5fe47-b9ab-4088-94b7-de9e07d28282",
+    glow: "purple",
+  },
+  {
+    slug: "aeronav-3d",
+    title: "AeroNav 3D",
+    tagline: "Volumetric pathfinding for flying AI",
+    description:
+      "True 3D navigation for drones, aircraft, birds, fish and spacecraft, covering the open space that Unreal's 2.5D navmesh can't.",
+    features: [
+      "One-click Sparse Voxel Octree bake in the editor",
+      "A* search with line-of-sight path smoothing",
+      "Async worker-thread queries, no frame hitches",
+      "Path-following component with banking and re-pathing",
+    ],
+    tech: ["UE5", "C++", "SVO", "A*"],
+    youtubeId: "UAn1u2DhY78",
+    link: "https://www.fab.com/listings/780d4113-034d-456a-8a47-d1adbfb3f19c",
+    glow: "blue",
+  },
+  {
+    slug: "infinity-local-sound-ai",
+    title: "Infinity Local Sound AI",
+    tagline: "Text-to-sound effects in the editor",
+    description:
+      "Turns a text prompt into game-ready sound effects and ambience, fully offline, with nothing added to the shipped build.",
+    features: [
+      "Sub-second generation on Vulkan GPUs, CPU fallback",
+      "Non-destructive waveform editor: trim, fade, pitch",
+      "Reproducible seeds, metadata written into the WAV",
+      "44.1 kHz, 24-bit stereo export",
+    ],
+    tech: ["UE 5.3–5.8", "C++", "Vulkan", "Editor Tool"],
+    youtubeId: "i8YuWx_HMm4",
+    link: "https://www.fab.com/listings/303eb452-ae16-497f-b5bc-4b9466da68e5",
+    glow: "green",
+  },
+];
+
 export type Experience = {
   company: string;
   role: string;
@@ -356,6 +464,7 @@ export const navItems = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Plugins", href: "#plugins" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
