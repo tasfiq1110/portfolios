@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Github, Linkedin, Mail, Send, ArrowUpRight, Copy, Check } from "lucide-react";
+import { Github, Linkedin, Mail, Send, ArrowUpRight, Copy, Check, Store } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeading } from "./section-heading";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ export function Contact() {
   const socials = [
     { label: "GitHub", href: profile.socials.github, icon: Github },
     { label: "LinkedIn", href: profile.socials.linkedin, icon: Linkedin },
+    { label: "Fab", href: profile.socials.fab, icon: Store },
     { label: "Email", href: `mailto:${profile.email}`, icon: Mail },
   ];
 
@@ -57,7 +58,7 @@ END:VCARD`;
         <div className="mb-16 grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <SectionHeading
-              chapter="05"
+              chapter="06"
               eyebrow="Contact"
               title="Got a build that needs feel?"
               description="Hiring, collaborating, or just want to talk Unreal — drop a line. I read everything."

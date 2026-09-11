@@ -20,7 +20,7 @@ export function Skills() {
           <OrbitalSkills data={skillNodes} />
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {skillGroups.map((g) => {
             const Icon = g.icon;
             return (

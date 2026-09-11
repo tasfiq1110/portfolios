@@ -13,10 +13,10 @@ export function Experience() {
     <section id="experience" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <SectionHeading
-          chapter="04"
+          chapter="05"
           eyebrow="Trajectory"
           title="Where I've built things."
-          description="Four years across narrative single-player, VR for Meta Quest, and Metaverse-scale virtual worlds."
+          description="Six years across narrative single-player, VR for Meta Quest, and Metaverse-scale virtual worlds."
         />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12">
