@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { ArrowRight, Link as LinkIcon, Zap } from "lucide-react";
+import { ArrowRight, Link as LinkIcon, Pause, Play } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +15,7 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
   const [pulse, setPulse] = React.useState<Record<number, boolean>>({});
   const [angle, setAngle] = React.useState(0);
   const [auto, setAuto] = React.useState(true);
+  const reducedMotion = useReducedMotion();
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const orbitRef = React.useRef<HTMLDivElement>(null);
@@ -33,10 +35,10 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
   }, []);
 
   React.useEffect(() => {
-    if (!auto) return;
+    if (!auto || reducedMotion) return;
     const t = setInterval(() => setAngle((a) => (a + 0.25) % 360), 50);
     return () => clearInterval(t);
-  }, [auto]);
+  }, [auto, reducedMotion]);
 
   const onContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -48,29 +50,18 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
   };
 
   const toggleNode = (id: number) => {
-    setExpanded((prev) => {
-      const next = { ...prev };
-      Object.keys(next).forEach((k) => {
-        if (parseInt(k) !== id) next[parseInt(k)] = false;
-      });
-      next[id] = !prev[id];
-      if (!prev[id]) {
-        setActiveId(id);
-        setAuto(false);
-        const related = data.find((d) => d.id === id)?.relatedIds ?? [];
-        const p: Record<number, boolean> = {};
-        related.forEach((r) => (p[r] = true));
-        setPulse(p);
-        const idx = data.findIndex((d) => d.id === id);
-        const target = (idx / data.length) * 360;
-        setAngle(270 - target);
-      } else {
-        setActiveId(null);
-        setAuto(true);
-        setPulse({});
-      }
-      return next;
-    });
+    const opening = !expanded[id];
+    setExpanded(opening ? { [id]: true } : {});
+    setActiveId(opening ? id : null);
+    setAuto(!opening);
+    if (opening) {
+      const related = data.find((d) => d.id === id)?.relatedIds ?? [];
+      setPulse(Object.fromEntries(related.map((relatedId) => [relatedId, true])));
+      const index = data.findIndex((d) => d.id === id);
+      setAngle(270 - (index / data.length) * 360);
+    } else {
+      setPulse({});
+    }
   };
 
   const positionFor = (i: number, n: number) => {
@@ -141,10 +132,6 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
                   zIndex: isExp ? 200 : pos.z,
                   opacity: isExp ? 1 : pos.opacity,
                 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleNode(item.id);
-                }}
               >
                 {isPulsing && (
                   <span
@@ -153,17 +140,25 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
                     style={{
                       background:
                         "radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%)",
-                      width: `${item.energy * 0.5 + 40}px`,
-                      height: `${item.energy * 0.5 + 40}px`,
-                      left: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                      top: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
+                      width: "76px",
+                      height: "76px",
+                      left: "-14px",
+                      top: "-14px",
                     }}
                   />
                 )}
 
-                <div
+                <button
+                  type="button"
+                  aria-label={item.title}
+                  aria-expanded={!!isExp}
+                  aria-controls={isExp ? `skill-${item.id}` : undefined}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleNode(item.id);
+                  }}
                   className={cn(
-                    "flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300",
+                    "flex h-12 w-12 items-center justify-center rounded-full border-2 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background",
                     isExp
                       ? "scale-150 border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/30"
                       : isRel
@@ -172,7 +167,7 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
                   )}
                 >
                   <Icon size={18} />
-                </div>
+                </button>
 
                 <div
                   className={cn(
@@ -184,54 +179,27 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
                 </div>
 
                 {isExp && (
-                  <Card className="absolute left-1/2 top-24 w-[min(17rem,80vw)] -translate-x-1/2 overflow-visible border-border/70 bg-popover/95 shadow-xl backdrop-blur-md">
+                  <Card id={`skill-${item.id}`} className="absolute left-1/2 top-24 w-[min(17rem,80vw)] -translate-x-1/2 overflow-visible border-border/70 bg-popover/95 shadow-xl backdrop-blur-md">
                     <span className="absolute -top-3 left-1/2 h-3 w-px -translate-x-1/2 bg-border" />
                     <CardHeader className="pb-2">
                       <div className="flex items-center justify-between">
                         <Badge
                           variant="outline"
-                          className={cn(
-                            "border-border text-[10px]",
-                            item.status === "completed" && "bg-primary/10 text-primary border-primary/30",
-                            item.status === "in-progress" && "bg-amber-500/10 text-amber-500 border-amber-500/30"
-                          )}
+                          className="border-border bg-primary/10 text-[10px] text-primary"
                         >
-                          {item.status === "completed"
-                            ? "PRODUCTION"
-                            : item.status === "in-progress"
-                              ? "ACTIVE"
-                              : "EXPLORING"}
+                          {item.category}
                         </Badge>
-                        <span className="font-mono text-[10px] text-muted-foreground">
-                          {item.date}
-                        </span>
                       </div>
                       <CardTitle className="text-sm mt-1">{item.title}</CardTitle>
                     </CardHeader>
                     <CardContent className="text-xs text-muted-foreground">
                       <p className="leading-relaxed">{item.content}</p>
 
-                      <div className="mt-4 border-t border-border/60 pt-3">
-                        <div className="mb-1 flex items-center justify-between text-[11px] text-foreground/80">
-                          <span className="flex items-center gap-1">
-                            <Zap size={10} />
-                            Proficiency
-                          </span>
-                          <span className="font-mono">{item.energy}%</span>
-                        </div>
-                        <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
-                          <div
-                            className="h-full bg-gradient-to-r from-primary/60 to-primary"
-                            style={{ width: `${item.energy}%` }}
-                          />
-                        </div>
-                      </div>
-
                       {item.relatedIds.length > 0 && (
                         <div className="mt-4 border-t border-border/60 pt-3">
                           <div className="mb-2 flex items-center text-[10px] uppercase tracking-wider text-muted-foreground">
                             <LinkIcon size={10} className="mr-1" />
-                            <span>Connected</span>
+                            <span>Related skills</span>
                           </div>
                           <div className="flex flex-wrap gap-1">
                             {item.relatedIds.map((rid) => {
@@ -265,9 +233,20 @@ export function OrbitalSkills({ data }: { data: SkillNode[] }) {
         </div>
       </div>
 
-      <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-        Click a node to inspect
-      </p>
+      <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-4 px-3">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Select a skill</p>
+        {!reducedMotion && <button
+          type="button"
+          className="flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          onClick={() => {
+            if (!auto) { setExpanded({}); setActiveId(null); setPulse({}); }
+            setAuto(!auto);
+          }}
+        >
+          {auto ? <Pause size={12} /> : <Play size={12} />}
+          {auto ? "Pause rotation" : "Resume rotation"}
+        </button>}
+      </div>
     </div>
   );
 }

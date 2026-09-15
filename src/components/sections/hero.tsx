@@ -600,8 +600,8 @@ export function Hero() {
           ref={taglineRef}
           className="mb-10 max-w-2xl text-balance text-base text-zinc-400 sm:text-lg"
         >
-          {profile.tagline} {profile.experienceYears}+ years shipping AAA-quality
-          gameplay, AI, and immersive worlds.
+          {profile.tagline} {profile.experienceYears}+ years across games,
+          multiplayer and VR.
         </p>
 
         <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-3">

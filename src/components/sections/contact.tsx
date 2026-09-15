@@ -27,9 +27,10 @@ export function Contact() {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = encodeURIComponent(String(data.get("name") ?? ""));
-    const subject = encodeURIComponent(`Portfolio inquiry from ${decodeURIComponent(name)}`);
-    const body = encodeURIComponent(String(data.get("message") ?? ""));
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const subject = encodeURIComponent(String(data.get("subject") ?? "").trim() || `Portfolio inquiry from ${name}`);
+    const body = encodeURIComponent(`${String(data.get("message") ?? "").trim()}\n\nFrom: ${name}\nEmail: ${email}`);
     window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
@@ -60,8 +61,8 @@ END:VCARD`;
             <SectionHeading
               chapter="06"
               eyebrow="Contact"
-              title="Got a build that needs feel?"
-              description="Hiring, collaborating, or just want to talk Unreal — drop a line. I read everything."
+              title="Have a project in mind?"
+              description="Get in touch about a role, a collaboration or an Unreal Engine project."
             />
           </div>
           <div className="md:col-span-5">
@@ -99,7 +100,7 @@ END:VCARD`;
               <Field
                 name="subject"
                 label="Subject"
-                placeholder="UE5 contractor for narrative title"
+                placeholder="What would you like to discuss?"
               />
               <div>
                 <label
@@ -113,7 +114,7 @@ END:VCARD`;
                   name="message"
                   required
                   rows={6}
-                  placeholder="Tell me about your project, timeline, and tech stack."
+                  placeholder="Tell me about your project, the role and your timeline."
                   className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
                 />
               </div>
@@ -123,11 +124,11 @@ END:VCARD`;
                   {submitted ? (
                     <>
                       <Check size={16} className="mr-2" />
-                      Opening your mail client…
+                      Opening your email draft…
                     </>
                   ) : (
                     <>
-                      Send message
+                      Open email draft
                       <Send
                         size={14}
                         className="ml-2 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -136,7 +137,7 @@ END:VCARD`;
                   )}
                 </Button>
                 <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                  Replies usually within 24h
+                  Review and send in your email app
                 </p>
               </div>
             </form>
@@ -161,7 +162,7 @@ END:VCARD`;
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm">
                 <span className="mb-3 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   vCard

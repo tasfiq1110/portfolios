@@ -69,8 +69,8 @@ export function Footer() {
                 color: "transparent",
               }}
             >
-              Let&apos;s ship something{" "}
-              <span className="italic text-primary">unreal</span>.
+              Let&apos;s talk about your{" "}
+              <span className="italic text-primary">project</span>.
             </h2>
           </div>
           <div className="md:col-span-4">
@@ -153,12 +153,9 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-border/60 pt-8 md:flex-row">
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            © {new Date().getFullYear()} {profile.name}. Crafted with Unreal-grade attention.
+            © {new Date().getFullYear()} {profile.name}.
           </p>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              v1.0
-            </span>
             <button
               type="button"
               onClick={scrollTop}

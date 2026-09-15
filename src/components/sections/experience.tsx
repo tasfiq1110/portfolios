@@ -14,9 +14,9 @@ export function Experience() {
       <div className="container mx-auto">
         <SectionHeading
           chapter="05"
-          eyebrow="Trajectory"
-          title="Where I've built things."
-          description="Six years across narrative single-player, VR for Meta Quest, and Metaverse-scale virtual worlds."
+          eyebrow="Experience"
+          title="Teams I've worked with."
+          description="My roles in game development, Meta Quest VR and multiplayer worlds."
         />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12">
@@ -145,17 +145,6 @@ export function Experience() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.2}>
-              <div className="rounded-2xl border border-dashed border-border p-5 text-sm text-muted-foreground">
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-foreground/80">
-                  Always learning
-                </p>
-                <p>
-                  Currently going deeper on UE5 Lumen/Nanite optimization &
-                  multiplayer netcode patterns at production scale.
-                </p>
-              </div>
-            </Reveal>
           </div>
         </div>
       </div>

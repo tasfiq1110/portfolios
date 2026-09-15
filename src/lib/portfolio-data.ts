@@ -16,8 +16,8 @@ export const profile = {
   name: "Mohammed Tasfiqur Rahman",
   shortName: "Tasfiqur Rahman",
   initials: "TR",
-  role: "Programmer & Unreal Engine Developer",
-  tagline: "I build immersive, real-time experiences powered by Unreal Engine.",
+  role: "Team Lead & Unreal Engine Developer",
+  tagline: "I build gameplay, AI systems and developer tools in Unreal Engine.",
   location: "Dhaka, Bangladesh",
   coordinates: "23.8103° N, 90.4125° E",
   email: "tasfiqur1110@gmail.com",
@@ -30,25 +30,18 @@ export const profile = {
     youtube: "https://www.youtube.com/@tasfiq1110",
     fab: "https://www.fab.com/sellers/Tasfiqur%20Rahman",
   },
-  cv: "/files/Mohammed_Tasfiqur_Rahman_CV.pdf",
+  cv: "/files/Mohammed_Tasfiqur_Rahman_CV%20.pdf",
   photos: {
     cinematic: "/images/portrait-cinematic.jpg",
   },
   certificate: "/images/cert.jpg",
-  now: "Building large-scale Metaverse worlds in UE5 at Future Studio.",
+  now: "Team Lead at Future Studio Bangladesh, working on multiplayer worlds and VR.",
 } as const;
 
 export const summary = [
-  "I'm an Unreal Engine developer with 6+ years of hands-on production experience — shipping AAA-quality, single-player narrative games on Steam, leading teams, and building large-scale Metaverse and VR worlds.",
-  "My focus is the moment-to-moment feel of interactive worlds: AI behaviour, gameplay systems, real-time graphics, and the polish that makes a build feel alive.",
-  "I also build and publish Unreal Engine plugins on Fab: offline LLM brains for NPCs, volumetric 3D navigation for flying AI, and in-editor AI sound generation.",
-];
-
-export const highlights: { label: string; value: string }[] = [
-  { label: "Years in Unreal", value: "6+" },
-  { label: "Shipped on Steam", value: "1" },
-  { label: "VR titles", value: "3+" },
-  { label: "Plugins on Fab", value: "3" },
+  "I'm an Unreal Engine developer with 6+ years of experience in gameplay programming, AI and VR. I currently lead metaverse and VR development at Future Studio Bangladesh.",
+  "My work includes single-player games released on Steam, multiplayer systems and Meta Quest experiences. I work in C++ and Blueprint, and help teams develop, debug and optimize their games.",
+  "I also independently develop plugins for Unreal Engine. My Fab releases cover killcam replays, local AI for NPCs, 3D navigation and sound generation in the editor.",
 ];
 
 export type SkillNode = {
@@ -56,10 +49,7 @@ export type SkillNode = {
   title: string;
   category: string;
   icon: LucideIcon;
-  date: string;
   content: string;
-  status: "completed" | "in-progress" | "pending";
-  energy: number;
   relatedIds: number[];
 };
 
@@ -69,11 +59,8 @@ export const skillNodes: SkillNode[] = [
     title: "C++ Gameplay",
     category: "Core Engineering",
     icon: Code2,
-    date: "2020 → now",
     content:
-      "Production C++ for gameplay & systems: actor lifecycle, replication, GAS, custom subsystems, optimization pass-throughs.",
-    status: "completed",
-    energy: 95,
+      "Gameplay systems in C++, including actor components, replication, custom subsystems and performance optimization.",
     relatedIds: [2, 3, 7, 9],
   },
   {
@@ -81,11 +68,8 @@ export const skillNodes: SkillNode[] = [
     title: "Blueprints",
     category: "Core Engineering",
     icon: Workflow,
-    date: "2020 → now",
     content:
-      "Blueprint architecture for designers: nativised graphs, function libraries, data-driven setup, BPI/Interface boundaries.",
-    status: "completed",
-    energy: 90,
+      "Reusable Blueprint systems, function libraries and interfaces that designers can configure through data assets.",
     relatedIds: [1, 3],
   },
   {
@@ -93,11 +77,8 @@ export const skillNodes: SkillNode[] = [
     title: "AI Systems",
     category: "Gameplay AI",
     icon: Cpu,
-    date: "2021 → now",
     content:
-      "Behaviour Trees, EQS, blackboards, custom services & decorators. Squad logic, perception graphs, scripted set-pieces.",
-    status: "completed",
-    energy: 92,
+      "AI behaviour using Behaviour Trees, EQS, blackboards and perception, with custom services and decorators.",
     relatedIds: [1, 4, 10],
   },
   {
@@ -105,11 +86,8 @@ export const skillNodes: SkillNode[] = [
     title: "Niagara VFX",
     category: "Graphics",
     icon: Sparkles,
-    date: "2022 → now",
     content:
-      "Niagara emitters, GPU sims, mesh particles, ribbons. Real-time effects synced to gameplay events and animation.",
-    status: "completed",
-    energy: 80,
+      "Niagara emitters, GPU particles and ribbons, connected to gameplay events and animation.",
     relatedIds: [3, 5, 6],
   },
   {
@@ -117,11 +95,8 @@ export const skillNodes: SkillNode[] = [
     title: "Lumen / Nanite",
     category: "Graphics",
     icon: Box,
-    date: "2023 → now",
     content:
-      "UE5 lighting & geometry workflow — virtualised meshes, dynamic GI, cinematic post-processing, performance budgets.",
-    status: "completed",
-    energy: 78,
+      "UE5 lighting and geometry workflows using Lumen, Nanite and post-processing, with attention to performance budgets.",
     relatedIds: [4, 6],
   },
   {
@@ -129,11 +104,8 @@ export const skillNodes: SkillNode[] = [
     title: "Optimization",
     category: "Graphics",
     icon: Gamepad2,
-    date: "2021 → now",
     content:
-      "GPU/CPU profiling, draw-call reduction, LOD strategy, async loading. Hitch-free 60+ fps on target hardware.",
-    status: "in-progress",
-    energy: 85,
+      "CPU and GPU profiling, draw-call reduction, LODs and asynchronous loading to improve frame times on target hardware.",
     relatedIds: [4, 5, 8],
   },
   {
@@ -141,11 +113,8 @@ export const skillNodes: SkillNode[] = [
     title: "Multiplayer",
     category: "Networking",
     icon: Network,
-    date: "2022 → now",
     content:
-      "Replication, RPCs, server-authoritative gameplay, lag compensation. Co-op and competitive prototypes.",
-    status: "in-progress",
-    energy: 75,
+      "Replication, RPCs and server-authoritative gameplay for multiplayer systems and prototypes.",
     relatedIds: [1, 8],
   },
   {
@@ -153,11 +122,8 @@ export const skillNodes: SkillNode[] = [
     title: "VR / Meta Quest",
     category: "Platforms",
     icon: Headset,
-    date: "2024 → now",
     content:
-      "VR interaction frameworks for Meta Quest. Hand & controller input, comfort-tuned locomotion, performance-first design.",
-    status: "completed",
-    energy: 82,
+      "Meta Quest interaction systems, controller input and locomotion, with a focus on comfort and stable performance.",
     relatedIds: [6, 7],
   },
   {
@@ -165,11 +131,8 @@ export const skillNodes: SkillNode[] = [
     title: "Engine Plugins",
     category: "Tools & Plugins",
     icon: Puzzle,
-    date: "Published on Fab",
     content:
-      "UE5 C++ code plugins with Runtime + Editor modules, clean Blueprint & C++ APIs, multithreaded bakes and async queries. Three plugins live on Fab.",
-    status: "completed",
-    energy: 88,
+      "C++ plugins for Unreal Engine, including runtime replay systems, editor tools and Blueprint APIs. Published on Fab.",
     relatedIds: [1, 10, 3],
   },
   {
@@ -177,11 +140,8 @@ export const skillNodes: SkillNode[] = [
     title: "On-Device AI",
     category: "Tools & Plugins",
     icon: BrainCircuit,
-    date: "Published on Fab",
     content:
-      "Offline LLM inference for NPCs (GGUF, crash-isolated helper process, tool calling, grammar-constrained JSON) and text-to-audio generation on Vulkan GPUs.",
-    status: "in-progress",
-    energy: 82,
+      "Local LLM integration for NPC dialogue, gameplay tool calls and structured JSON output, plus sound generation on Vulkan GPUs.",
     relatedIds: [9, 3],
   },
 ];
@@ -218,6 +178,7 @@ export const skillGroups = [
     icon: Puzzle,
     skills: [
       "UE5 Runtime & Editor Plugins",
+      "Killcam & Replay Systems",
       "Fab Marketplace Publishing",
       "Offline LLM Integration (GGUF)",
       "3D Pathfinding (Sparse Voxel Octree, A*)",
@@ -257,7 +218,7 @@ export const projects: Project[] = [
     subtitle: "Rajarbag Police Line — Liberation War, 1971",
     year: "2024",
     description:
-      "Third-person action set during the first night of Bangladesh's Liberation War. Dynamic combat, cinematic cameras, and reactive environments built on UE5 with multiplayer foundations.",
+      "A third-person action game set during the first night of Bangladesh's Liberation War, with combat, cinematic cameras and multiplayer systems built in UE5.",
     tech: ["Unreal Engine 5", "C++", "Multiplayer", "Cinematics"],
     youtubeId: "IBL3QXyYtl8",
     link: "https://www.youtube.com/watch?v=IBL3QXyYtl8",
@@ -270,7 +231,7 @@ export const projects: Project[] = [
     subtitle: "Nokhsi BOP — Border Outpost",
     year: "2023",
     description:
-      "Tactical encounter prototype set at a Liberation War border outpost. Behaviour-tree driven AI squads, multi-stage objectives, and replicated combat in UE4.",
+      "A tactical prototype set at a Liberation War border outpost, with AI squads, multi-stage objectives and replicated combat in UE4.",
     tech: ["Unreal Engine 4", "Blueprints", "Behavior Trees", "Multiplayer"],
     youtubeId: "rKjJ5FUsy2w",
     link: "https://www.youtube.com/watch?v=rKjJ5FUsy2w",
@@ -283,7 +244,7 @@ export const projects: Project[] = [
     subtitle: "Outlast-inspired horror",
     year: "2023",
     description:
-      "First-person psychological horror with stalking AI, dynamic audio cues, and a hand-camera traversal system. Built around tight-corridor pacing and perception loops.",
+      "A first-person horror project with stalking AI, audio cues and a handheld camera, built around exploration and pursuit.",
     tech: ["Unreal Engine", "C++", "AI Perception"],
     youtubeId: "KGU6wkyqFvI",
     link: "https://www.youtube.com/watch?v=KGU6wkyqFvI",
@@ -296,7 +257,7 @@ export const projects: Project[] = [
     subtitle: "Character-select arena combat",
     year: "2022",
     description:
-      "Modular combat framework: character selection, stamina-driven movesets, hit reactions, and damage events all wired through gameplay tags and data assets.",
+      "A modular combat framework with character selection, stamina, hit reactions and damage events, configured through gameplay tags and data assets.",
     tech: ["Unreal Engine", "C++", "Gameplay Tags"],
     youtubeId: "N78YzbRtNkg",
     link: "https://www.youtube.com/watch?v=N78YzbRtNkg",
@@ -308,7 +269,7 @@ export const projects: Project[] = [
     subtitle: "Physics-driven bow & arrow",
     year: "2021",
     description:
-      "Early-career archery prototype: draw-tension input mapping, projectile arc with wind, and hit feedback. The tech demo that started everything.",
+      "An archery prototype with bow-draw input, projectile trajectories, wind and hit feedback.",
     tech: ["Unreal Engine", "C++", "Physics"],
     youtubeId: "t-1WqyUR5ls",
     link: "https://www.youtube.com/watch?v=t-1WqyUR5ls",
@@ -338,20 +299,39 @@ export type Plugin = {
   youtubeId: string;
   link: string;
   glow: "blue" | "purple" | "green" | "red" | "orange";
+  featured?: boolean;
 };
 
 export const fabStore = "https://www.fab.com/sellers/Tasfiqur%20Rahman";
 
 export const plugins: Plugin[] = [
   {
+    slug: "killback-replay",
+    title: "KillBack Replay",
+    tagline: "Killcams and instant replays for Unreal Engine",
+    description:
+      "Records recent gameplay in a rolling memory buffer and plays it back with visual replay actors. Built for multiplayer killcams, instant replays and saved highlights.",
+    features: [
+      "Killer POV transfer with Replay Relay",
+      "Animation, audio, Niagara/VFX and HUD replay",
+      "Camera modes, seeking, frame stepping and slow motion",
+      "Save and load clips through Blueprint or C++",
+    ],
+    tech: ["UE 5.3–5.8", "C++", "Blueprint", "Multiplayer"],
+    youtubeId: "GW_zKS7dztw",
+    link: "https://www.fab.com/listings/487a5d15-a0de-4c1f-beba-180dadc86ce7",
+    glow: "orange",
+    featured: true,
+  },
+  {
     slug: "local-mind-ai",
     title: "Local Mind AI",
-    tagline: "Offline LLM brains for NPCs",
+    tagline: "Local language models for NPCs",
     description:
-      "Runs a real large language model inside the game, on the player's machine. No cloud service, no API keys, no cost per message.",
+      "Runs language models on the player's machine in a separate process, with automatic recovery. Supports NPC conversations and gameplay actions through Blueprint and C++.",
     features: [
       "Crash-isolated helper process with auto-restart",
-      "Streaming chat, vision input and two-way voice",
+      "Streaming dialogue and vision input",
       "Tool calling that triggers gameplay functions",
       "Grammar-constrained JSON and semantic memory",
     ],
@@ -365,11 +345,11 @@ export const plugins: Plugin[] = [
     title: "AeroNav 3D",
     tagline: "Volumetric pathfinding for flying AI",
     description:
-      "True 3D navigation for drones, aircraft, birds, fish and spacecraft, covering the open space that Unreal's 2.5D navmesh can't.",
+      "3D pathfinding for flying, underwater and zero-gravity AI, using an editor-baked Sparse Voxel Octree to navigate around level geometry.",
     features: [
       "One-click Sparse Voxel Octree bake in the editor",
       "A* search with line-of-sight path smoothing",
-      "Async worker-thread queries, no frame hitches",
+      "Asynchronous path queries on worker threads",
       "Path-following component with banking and re-pathing",
     ],
     tech: ["UE5", "C++", "SVO", "A*"],
@@ -382,9 +362,9 @@ export const plugins: Plugin[] = [
     title: "Infinity Local Sound AI",
     tagline: "Text-to-sound effects in the editor",
     description:
-      "Turns a text prompt into game-ready sound effects and ambience, fully offline, with nothing added to the shipped build.",
+      "Generates sound effects and ambience from text prompts on your machine. Runs in the Unreal Editor without adding a runtime module to packaged games.",
     features: [
-      "Sub-second generation on Vulkan GPUs, CPU fallback",
+      "Vulkan GPU generation with a CPU fallback",
       "Non-destructive waveform editor: trim, fade, pitch",
       "Reproducible seeds, metadata written into the WAV",
       "44.1 kHz, 24-bit stereo export",
@@ -394,6 +374,13 @@ export const plugins: Plugin[] = [
     link: "https://www.fab.com/listings/303eb452-ae16-497f-b5bc-4b9466da68e5",
     glow: "green",
   },
+];
+
+export const highlights: { label: string; value: string }[] = [
+  { label: "Years in Unreal", value: `${profile.experienceYears}+` },
+  { label: "Plugins on Fab", value: String(plugins.length) },
+  { label: "Game releases", value: "Steam" },
+  { label: "VR platform", value: "Meta Quest" },
 ];
 
 export type Experience = {
@@ -407,14 +394,13 @@ export type Experience = {
 export const experience: Experience[] = [
   {
     company: "Future Studio Bangladesh",
-    role: "Game Developer — Metaverse & VR",
+    role: "Team Lead",
     period: "2024 — Present",
     location: "Dhaka, Bangladesh",
     details: [
-      "Building large-scale Metaverse and VR experiences in Unreal Engine 5.",
-      "Persistent virtual worlds with avatars, voice chat, social hubs, and virtual economies.",
-      "Multiplayer systems, marketplace integrations, gamified learning environments.",
-      "Cross-border collaboration to deliver networked, real-time experiences.",
+      "Lead metaverse and VR development in Unreal Engine 5.",
+      "Build avatar systems, voice chat, social hubs and virtual economies for multiplayer worlds.",
+      "Work with international teams on marketplace integration and gamified learning features.",
     ],
   },
   {
@@ -423,9 +409,9 @@ export const experience: Experience[] = [
     period: "2024",
     location: "Dhaka, BD / Seoul, KR (Remote)",
     details: [
-      "Interactive VR for Meta Quest with a hard focus on performance.",
-      "Built immersive environments and interaction systems in UE.",
-      "Worked with a Korea-based team refining VR gameplay and UX.",
+      "Developed Meta Quest environments and interaction systems in Unreal Engine.",
+      "Optimized VR applications for stable performance.",
+      "Worked with a South Korea-based team to refine VR gameplay and interaction design.",
     ],
   },
   {
@@ -435,9 +421,9 @@ export const experience: Experience[] = [
     location: "Dhaka, Bangladesh",
     details: [
       "Led development of single-player narrative games in Unreal Engine.",
-      "Designed advanced AI, quest mechanics, and narrative gameplay flow.",
-      "Optimized for multi-platform, launched titles on Steam.",
-      "Mentored juniors and coordinated cross-functional teams.",
+      "Designed AI systems, quests and gameplay mechanics.",
+      "Optimized game performance and led releases on Steam.",
+      "Mentored junior developers and coordinated work across disciplines.",
     ],
   },
 ];
