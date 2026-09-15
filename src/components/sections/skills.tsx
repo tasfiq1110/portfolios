@@ -12,8 +12,8 @@ export function Skills() {
         <SectionHeading
           chapter="02"
           eyebrow="Stack"
-          title="The toolkit I ship with."
-          description="An interactive map of the systems I work in every day. Click a node to dig into how I use it."
+          title="The tools behind my work."
+          description="Select a skill to see how I use it and the systems it connects to."
         />
 
         <div className="mt-12">

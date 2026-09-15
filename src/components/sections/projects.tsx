@@ -21,7 +21,12 @@ function YouTubeThumb({ id, alt }: { id: string; alt: string }) {
         loading="lazy"
         onLoad={() => setLoaded(true)}
         onError={(e) => {
-          (e.currentTarget as HTMLImageElement).src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          const img = e.currentTarget;
+          if (!img.src.includes("hqdefault")) {
+            img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          } else {
+            setLoaded(true);
+          }
         }}
         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
@@ -104,8 +109,8 @@ export function Projects() {
           <SectionHeading
             chapter="03"
             eyebrow="Selected Work"
-            title="Things I've shipped & shaped."
-            description="From Liberation War narrative pieces to combat sandboxes, traffic systems, and physics demos. Click any card to watch the gameplay."
+            title="Games and gameplay systems."
+            description="Selected game projects and prototypes. Open a card to watch the gameplay."
           />
         </div>
 

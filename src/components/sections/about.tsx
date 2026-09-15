@@ -100,7 +100,7 @@ export function About() {
 
                 {/* Top-right meta */}
                 <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.3em] text-white/80 backdrop-blur-sm">
-                  IRL · 23.81° N
+                  Dhaka, Bangladesh
                 </div>
               </motion.div>
 
@@ -116,7 +116,7 @@ export function About() {
                         <span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-70" />
                         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
                       </span>
-                      Live
+                      Team Lead
                     </span>
                   </div>
                   <p className="text-sm text-foreground/80">{profile.now}</p>
@@ -130,7 +130,7 @@ export function About() {
             <SectionHeading
               chapter="01"
               eyebrow="About"
-              title="Game developer who codes the feel."
+              title="Gameplay, tools and teamwork."
             />
 
             <div className="space-y-5">
@@ -155,7 +155,7 @@ export function About() {
                       <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                         {h.label}
                       </dt>
-                      <dd className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+                      <dd className={`${num > 0 ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"} mt-2 font-bold tracking-tight`}>
                         {Number.isFinite(num) && num > 0 ? (
                           <>
                             <Counter value={num} />

@@ -27,18 +27,20 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tasfiqurrahman.dev"),
+  metadataBase: new URL("https://portfolios-liard.vercel.app"),
   title: {
-    default: "Tasfiqur Rahman — Unreal Engine Developer",
+    default: "Tasfiqur Rahman — Team Lead & Unreal Engine Developer",
     template: "%s | Tasfiqur Rahman",
   },
   description:
-    "Programmer & Unreal Engine developer specializing in AI systems, single-player narrative games, and VR. 6+ years building AAA-quality experiences in UE4/UE5.",
+    "Team Lead and Unreal Engine developer with 6+ years of experience in C++, gameplay, AI, multiplayer and VR. Explore my projects and four published Fab plugins.",
   keywords: [
     "Unreal Engine",
     "UE5",
     "C++",
     "Game Developer",
+    "Team Lead",
+    "KillBack Replay",
     "VR Developer",
     "AI Programmer",
     "Niagara",
@@ -48,9 +50,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Mohammed Tasfiqur Rahman" }],
   openGraph: {
-    title: "Tasfiqur Rahman — Unreal Engine Developer",
+    title: "Tasfiqur Rahman — Team Lead & Unreal Engine Developer",
     description:
-      "Real-time graphics, immersive experiences, and gameplay systems built in Unreal Engine.",
+      "Gameplay, AI, multiplayer and VR projects, plus Unreal Engine plugins published on Fab.",
     type: "website",
     locale: "en_US",
   },
