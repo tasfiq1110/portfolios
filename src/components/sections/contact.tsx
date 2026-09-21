@@ -50,8 +50,8 @@ export function Contact() {
             <SectionHeading
               chapter="07"
               eyebrow="Contact"
-              title="Have a project in mind?"
-              description="Get in touch about a role, a collaboration or an Unreal Engine project."
+              title="Let's build something."
+              description="Hiring for a gameplay, tools or VR role? Tell me about the team and the problem — I read every message myself."
             />
           </div>
           <div className="md:col-span-5">

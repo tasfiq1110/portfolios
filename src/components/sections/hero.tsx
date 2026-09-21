@@ -3,9 +3,18 @@
 import * as React from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { ArrowDown, ArrowUpRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Crosshair,
+  FileDown,
+  Github,
+  Linkedin,
+  Mail,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile, highlights } from "@/lib/portfolio-data";
+import { createDroneField, type DroneField } from "@/components/ui/hero-drones";
 
 interface ThreeRefs {
   scene: THREE.Scene | null;
@@ -13,13 +22,13 @@ interface ThreeRefs {
   renderer: THREE.WebGLRenderer | null;
   stars: THREE.Points[];
   nebula: THREE.Mesh | null;
-  icosa: THREE.LineSegments | null;
-  torus: THREE.LineSegments | null;
+  drones: DroneField | null;
   shootingStars: { mesh: THREE.Mesh; velocity: THREE.Vector3; life: number }[];
   animationId: number | null;
   mouseX: number;
   mouseY: number;
   scrollY: number;
+  lastFrame: number;
 }
 
 export function Hero() {
@@ -31,6 +40,15 @@ export function Hero() {
   const badgeRef = React.useRef<HTMLDivElement>(null);
   const socialsRef = React.useRef<HTMLDivElement>(null);
   const scrollCueRef = React.useRef<HTMLAnchorElement>(null);
+  /** Measured periodically so drones fade out behind copy instead of over it. */
+  const statsRef = React.useRef<HTMLDListElement>(null);
+  const hudRef = React.useRef<HTMLDivElement>(null);
+  const contentRects = React.useRef<DOMRect[]>([]);
+
+  const [score, setScore] = React.useState(0);
+  const [best, setBest] = React.useState(0);
+  const [hasPlayed, setHasPlayed] = React.useState(false);
+  const [coarsePointer, setCoarsePointer] = React.useState(false);
 
   const threeRefs = React.useRef<ThreeRefs>({
     scene: null,
@@ -38,13 +56,13 @@ export function Hero() {
     renderer: null,
     stars: [],
     nebula: null,
-    icosa: null,
-    torus: null,
+    drones: null,
     shootingStars: [],
     animationId: null,
     mouseX: 0,
     mouseY: 0,
     scrollY: 0,
+    lastFrame: 0,
   });
 
   // ---- Three.js scene ----
@@ -189,32 +207,20 @@ export function Hero() {
     refs.scene.add(nebula);
     refs.nebula = nebula;
 
-    // ---- Wireframe icosahedron (foreground hero geo) ----
-    const icoGeo = new THREE.IcosahedronGeometry(18, 1);
-    const icoEdges = new THREE.EdgesGeometry(icoGeo);
-    const icoMat = new THREE.LineBasicMaterial({
-      color: 0x10b981,
-      transparent: true,
-      opacity: 0.55,
-      linewidth: 1,
+    // ---- Drone field (the hero mini-game) ----
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    // Fewer targets on phones: less to draw, and less to crowd a small screen.
+    const droneCount = window.innerWidth < 640 ? 4 : 6;
+    refs.drones = createDroneField(refs.scene, refs.camera, refs.renderer, {
+      count: droneCount,
+      reducedMotion,
+      onHit: () => {
+        setScore((n) => n + 1);
+        setHasPlayed(true);
+      },
     });
-    const icosa = new THREE.LineSegments(icoEdges, icoMat);
-    icosa.position.set(-55, 12, -40);
-    refs.scene.add(icosa);
-    refs.icosa = icosa;
-
-    // ---- Wireframe torus knot (right-side accent) ----
-    const torusGeo = new THREE.TorusKnotGeometry(10, 2.6, 96, 16);
-    const torusEdges = new THREE.EdgesGeometry(torusGeo);
-    const torusMat = new THREE.LineBasicMaterial({
-      color: 0x6366f1,
-      transparent: true,
-      opacity: 0.5,
-    });
-    const torus = new THREE.LineSegments(torusEdges, torusMat);
-    torus.position.set(60, 18, -45);
-    refs.scene.add(torus);
-    refs.torus = torus;
 
     // ---- Shooting star factory ----
     const spawnShootingStar = () => {
@@ -242,6 +248,24 @@ export function Hero() {
     };
 
     let lastShoot = 0;
+    let lastMeasure = 0;
+
+    // Only the boxes that actually carry text or controls, so drones still
+    // have the gutters beside the headline to fly through. The nav is in the
+    // list because it floats over the hero without a background of its own.
+    const measureContent = () =>
+      [
+        document.querySelector("header"),
+        badgeRef.current,
+        titleRef.current,
+        taglineRef.current,
+        ctaRef.current,
+        statsRef.current,
+        socialsRef.current,
+        hudRef.current,
+      ]
+        .filter(Boolean)
+        .map((el) => (el as HTMLElement).getBoundingClientRect());
 
     // ---- Mouse tracking ----
     const onPointerMove = (e: PointerEvent) => {
@@ -282,23 +306,17 @@ export function Hero() {
         refs.camera.lookAt(refs.mouseX * 8, 10, -600);
       }
 
-      // Icosahedron — rotate + drift toward mouse
-      if (refs.icosa) {
-        refs.icosa.rotation.x += 0.003;
-        refs.icosa.rotation.y += 0.005;
-        // float + parallax with cursor
-        refs.icosa.position.x += (-55 + refs.mouseX * 6 - refs.icosa.position.x) * 0.04;
-        refs.icosa.position.y =
-          12 + Math.sin(t * 0.6) * 2 + -refs.mouseY * 4;
-      }
-
-      // Torus knot
-      if (refs.torus) {
-        refs.torus.rotation.x += 0.004;
-        refs.torus.rotation.y -= 0.006;
-        refs.torus.position.x += (60 - refs.mouseX * 6 - refs.torus.position.x) * 0.04;
-        refs.torus.position.y =
-          18 + Math.cos(t * 0.7) * 2 + -refs.mouseY * 4;
+      // Drones — drift, dim behind copy, and stay hit-testable
+      if (refs.drones) {
+        const dt = Math.min(0.05, t - (refs.lastFrame || t));
+        refs.lastFrame = t;
+        // Re-measuring every frame would mean a layout read per frame; four
+        // times a second is plenty to track scrolling and resizes.
+        if (t - lastMeasure > 0.25) {
+          contentRects.current = measureContent();
+          lastMeasure = t;
+        }
+        refs.drones.update(t, dt, contentRects.current);
       }
 
       // Shooting stars
@@ -364,16 +382,8 @@ export function Hero() {
         (refs.nebula.material as THREE.Material).dispose();
         refs.nebula = null;
       }
-      if (refs.icosa) {
-        refs.icosa.geometry.dispose();
-        (refs.icosa.material as THREE.Material).dispose();
-        refs.icosa = null;
-      }
-      if (refs.torus) {
-        refs.torus.geometry.dispose();
-        (refs.torus.material as THREE.Material).dispose();
-        refs.torus = null;
-      }
+      refs.drones?.dispose();
+      refs.drones = null;
       refs.shootingStars.forEach((s) => {
         const line = s.mesh as unknown as THREE.Line;
         refs.scene?.remove(line);
@@ -382,6 +392,62 @@ export function Hero() {
       });
       refs.shootingStars = [];
       refs.renderer?.dispose();
+    };
+  }, []);
+
+  // ---- Best score, kept per browser ----
+  React.useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem("hero-drones-best");
+      if (stored) setBest(parseInt(stored, 10) || 0);
+    } catch {
+      /* private mode, blocked storage — the game just won't remember */
+    }
+    setCoarsePointer(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
+  React.useEffect(() => {
+    if (score <= best) return;
+    setBest(score);
+    try {
+      window.localStorage.setItem("hero-drones-best", String(score));
+    } catch {
+      /* non-fatal */
+    }
+  }, [score, best]);
+
+  // ---- Tap / click to shoot ----
+  React.useEffect(() => {
+    const section = containerRef.current;
+    if (!section) return;
+
+    let startX = 0;
+    let startY = 0;
+    let startAt = 0;
+
+    const onDown = (e: PointerEvent) => {
+      startX = e.clientX;
+      startY = e.clientY;
+      startAt = e.timeStamp;
+    };
+
+    const onUp = (e: PointerEvent) => {
+      // Never swallow a real control: links and buttons keep their own job.
+      if ((e.target as HTMLElement).closest("a, button, input, textarea")) return;
+      // Only a tap counts — a drag is a scroll or a text selection.
+      if (Math.hypot(e.clientX - startX, e.clientY - startY) > 10) return;
+      if (e.timeStamp - startAt > 500) return;
+
+      if (threeRefs.current.drones?.shoot(e.clientX, e.clientY)) {
+        setHasPlayed(true);
+      }
+    };
+
+    section.addEventListener("pointerdown", onDown);
+    section.addEventListener("pointerup", onUp);
+    return () => {
+      section.removeEventListener("pointerdown", onDown);
+      section.removeEventListener("pointerup", onUp);
     };
   }, []);
 
@@ -538,14 +604,6 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-40 -z-[5] bg-gradient-to-b from-transparent to-background"
       />
 
-      {/* Floating data ticker (top) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-20 z-10 -translate-x-1/2 select-none font-mono text-[10px] uppercase tracking-[0.4em] text-white/30"
-      >
-        UE5 ▸ C++ ▸ NIAGARA ▸ LUMEN ▸ NANITE ▸ VR
-      </div>
-
       {/* Coordinate HUD corners */}
       <div
         aria-hidden
@@ -639,7 +697,10 @@ export function Hero() {
         </div>
 
         {/* Credibility strip — the numbers a hiring manager scans for */}
-        <dl className="mt-12 grid w-full max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4">
+        <dl
+          ref={statsRef}
+          className="mt-12 grid w-full max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4"
+        >
           {highlights.map((h) => (
             <div key={h.label} className="bg-black/40 px-4 py-4 backdrop-blur-sm">
               <dd className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
@@ -685,6 +746,27 @@ export function Hero() {
           >
             <Mail size={18} />
           </a>
+        </div>
+
+        {/* Mini-game scoreboard — decorative, so it stays out of the tab order */}
+        <div
+          ref={hudRef}
+          aria-hidden
+          className="mt-8 flex select-none items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-sm"
+        >
+          <Crosshair
+            size={12}
+            className={score > 0 ? "text-emerald-400" : "text-white/40"}
+          />
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/60">
+            {hasPlayed ? (
+              <>
+                {score} <span className="text-white/30">/ best {best}</span>
+              </>
+            ) : (
+              <>{coarsePointer ? "Tap" : "Click"} the drones</>
+            )}
+          </span>
         </div>
       </div>
 
