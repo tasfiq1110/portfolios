@@ -13,7 +13,7 @@ export function Experience() {
     <section id="experience" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <SectionHeading
-          chapter="05"
+          chapter="06"
           eyebrow="Experience"
           title="Teams I've worked with."
           description="My roles in game development, Meta Quest VR and multiplayer worlds."

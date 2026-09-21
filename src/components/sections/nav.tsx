@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { FileDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,7 @@ export function Nav() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-full px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="rounded-full px-2.5 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               {item.label}
             </a>
@@ -64,9 +64,20 @@ export function Nav() {
           <Button
             asChild
             size="sm"
+            variant="outline"
+            className="hidden rounded-full lg:inline-flex"
+          >
+            <a href={profile.cv} target="_blank" rel="noreferrer" download>
+              <FileDown size={14} className="mr-1.5" />
+              Résumé
+            </a>
+          </Button>
+          <Button
+            asChild
+            size="sm"
             className="hidden sm:inline-flex rounded-full"
           >
-            <a href="#contact">Let&apos;s talk</a>
+            <a href="#contact">Hire me</a>
           </Button>
           <button
             type="button"
@@ -102,11 +113,22 @@ export function Nav() {
                 </a>
               ))}
               <a
+                href={profile.cv}
+                target="_blank"
+                rel="noreferrer"
+                download
+                onClick={() => setOpen(false)}
+                className="mt-1 flex items-center justify-center gap-2 rounded-xl border border-border px-4 py-3 text-center text-sm font-medium text-foreground"
+              >
+                <FileDown size={14} />
+                Download résumé
+              </a>
+              <a
                 href="#contact"
                 onClick={() => setOpen(false)}
-                className="mt-1 rounded-xl bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground"
+                className="mt-2 rounded-xl bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground"
               >
-                Let&apos;s talk
+                Hire me
               </a>
             </div>
           </motion.div>

@@ -3,9 +3,9 @@
 import * as React from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { profile } from "@/lib/portfolio-data";
+import { profile, highlights } from "@/lib/portfolio-data";
 
 interface ThreeRefs {
   scene: THREE.Scene | null;
@@ -509,7 +509,7 @@ export function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden text-white"
+      className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden py-28 text-white sm:py-24"
       style={
         {
           ["--tilt-x" as string]: "0deg",
@@ -598,10 +598,10 @@ export function Hero() {
 
         <p
           ref={taglineRef}
-          className="mb-10 max-w-2xl text-balance text-base text-zinc-400 sm:text-lg"
+          className="mb-8 max-w-2xl text-balance text-base text-zinc-400 sm:text-lg"
         >
-          {profile.tagline} {profile.experienceYears}+ years across games,
-          multiplayer and VR.
+          {profile.tagline} {profile.experienceYears}+ years shipping games,
+          multiplayer systems and VR — plus four plugins other developers build on.
         </p>
 
         <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-3">
@@ -620,6 +620,17 @@ export function Hero() {
             variant="outline"
             className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white"
           >
+            <a href={profile.cv} target="_blank" rel="noreferrer" download>
+              <FileDown size={16} className="mr-2" />
+              Download résumé
+            </a>
+          </Button>
+          <Button
+            asChild
+            size="xl"
+            variant="ghost"
+            className="text-zinc-300 hover:bg-white/5 hover:text-white"
+          >
             <a href="#contact">
               <Mail size={16} className="mr-2" />
               Get in touch
@@ -627,9 +638,27 @@ export function Hero() {
           </Button>
         </div>
 
+        {/* Credibility strip — the numbers a hiring manager scans for */}
+        <dl className="mt-12 grid w-full max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4">
+          {highlights.map((h) => (
+            <div key={h.label} className="bg-black/40 px-4 py-4 backdrop-blur-sm">
+              <dd className="font-display text-xl font-bold tracking-tight text-white sm:text-2xl">
+                {h.value}
+              </dd>
+              <dt className="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400">
+                {h.label}
+              </dt>
+            </div>
+          ))}
+        </dl>
+
+        <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">
+          {profile.availability} · {profile.timezone}
+        </p>
+
         <div
           ref={socialsRef}
-          className="mt-12 flex items-center gap-5 text-zinc-500"
+          className="mt-8 flex items-center gap-5 text-zinc-500"
         >
           <a
             href={profile.socials.github}
@@ -662,7 +691,7 @@ export function Hero() {
       <a
         ref={scrollCueRef}
         href="#about"
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-500 transition-colors hover:text-white"
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono lg:flex text-[10px] uppercase tracking-[0.3em] text-zinc-500 transition-colors hover:text-white"
       >
         <span>Scroll</span>
         <ArrowDown size={14} className="animate-bounce" />

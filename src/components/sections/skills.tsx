@@ -10,7 +10,7 @@ export function Skills() {
     <section id="skills" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <SectionHeading
-          chapter="02"
+          chapter="03"
           eyebrow="Stack"
           title="The tools behind my work."
           description="Select a skill to see how I use it and the systems it connects to."

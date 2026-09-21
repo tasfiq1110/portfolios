@@ -1,12 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Github, Linkedin, Mail, Send, ArrowUpRight, Copy, Check, Store } from "lucide-react";
+import { Github, Linkedin, Mail, Send, ArrowUpRight, Copy, Check, Store, Clock, FileDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeading } from "./section-heading";
 import { Button } from "@/components/ui/button";
 import { LocationMap } from "@/components/ui/location-map";
-import { QRCode } from "@/components/ui/qr-code";
 import { profile } from "@/lib/portfolio-data";
 
 export function Contact() {
@@ -43,23 +42,13 @@ export function Contact() {
     { label: "Email", href: `mailto:${profile.email}`, icon: Mail },
   ];
 
-  const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:${profile.name}
-TITLE:${profile.role}
-EMAIL:${profile.email}
-URL:${profile.socials.github}
-URL:${profile.socials.linkedin}
-ADR:;;${profile.location};;;
-END:VCARD`;
-
   return (
     <section id="contact" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <div className="mb-16 grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <SectionHeading
-              chapter="06"
+              chapter="07"
               eyebrow="Contact"
               title="Have a project in mind?"
               description="Get in touch about a role, a collaboration or an Unreal Engine project."
@@ -163,16 +152,47 @@ END:VCARD`;
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div className="rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm">
-                <span className="mb-3 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                  vCard
-                </span>
-                <div className="flex justify-center">
-                  <QRCode value={vcard} size={160} className="text-foreground" />
+              <div className="flex flex-col rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm">
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    Open to
+                  </span>
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-70" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                  </span>
                 </div>
-                <p className="mt-3 text-center text-xs text-muted-foreground">
-                  Scan to save my contact
+                <ul className="space-y-2">
+                  {profile.openTo.map((r) => (
+                    <li
+                      key={r}
+                      className="flex items-start gap-2 text-sm leading-relaxed text-foreground/80"
+                    >
+                      <span className="mt-[0.45rem] h-1 w-1 shrink-0 rounded-full bg-primary/70" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {profile.workModes.map((m) => (
+                    <span
+                      key={m}
+                      className="rounded-full border border-border/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-5 flex items-center gap-2 border-t border-border/60 pt-4 text-xs text-muted-foreground">
+                  <Clock size={12} className="shrink-0 text-primary" />
+                  {profile.responseTime}
                 </p>
+                <Button asChild variant="outline" className="group mt-4 w-full">
+                  <a href={profile.cv} target="_blank" rel="noreferrer" download>
+                    <FileDown size={14} className="mr-2 transition-transform group-hover:translate-y-0.5" />
+                    Download résumé
+                  </a>
+                </Button>
               </div>
 
               <div className="flex flex-col gap-3 rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm">

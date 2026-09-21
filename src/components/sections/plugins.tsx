@@ -121,7 +121,7 @@ export function Plugins() {
       <div className="container mx-auto">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            chapter="04"
+            chapter="05"
             eyebrow="Fab Marketplace"
             title="Tools I've built for Unreal."
             description="My published plugins for replay systems, local AI, 3D navigation and sound generation."

@@ -130,7 +130,7 @@ export function About() {
             <SectionHeading
               chapter="01"
               eyebrow="About"
-              title="Gameplay, tools and teamwork."
+              title="Gameplay, tools and the people who ship them."
             />
 
             <div className="space-y-5">
@@ -165,6 +165,11 @@ export function About() {
                           h.value
                         )}
                       </dd>
+                      {h.hint && (
+                        <p className="mt-2 text-[11px] leading-snug text-muted-foreground/80">
+                          {h.hint}
+                        </p>
+                      )}
                       <span
                         aria-hidden
                         className="absolute bottom-0 left-0 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"

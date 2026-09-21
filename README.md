@@ -33,8 +33,8 @@ src/
 │   ├── ui/                  # primitives (button, badge, card,
 │   │                          theme-toggle, spotlight-card,
 │   │                          location-map, qr-code, orbital-skills)
-│   └── sections/            # nav, hero, about, skills, projects,
-│                              experience, contact, footer
+│   └── sections/            # nav, hero, about, capabilities, skills,
+│                              projects, plugins, experience, contact, footer
 └── lib/
     ├── utils.ts             # cn() helper
     └── portfolio-data.ts    # single source of truth for content
@@ -48,7 +48,11 @@ To update content (projects, experience, skills, copy), edit
 - `public/files/Mohammed_Tasfiqur_Rahman_CV.pdf` — drop your real CV here.
 - The `metadataBase` URL in `src/app/layout.tsx` once the production domain is known.
 
-## References
+## Content notes
 
-The original component sketches that inspired this site live in
-[`_references/`](./_references/). They are not imported by the build.
+- The PIXO trailer is streamed from `playpixo.gg` and only fetched when a
+  visitor presses play — the file is ~42 MB, so it must not be bundled or
+  auto-loaded. Key art lives in `public/images/pixo/`.
+- Hiring-facing copy (`strengths`, `proofPoints`, `profile.openTo`,
+  `profile.workModes`, `profile.responseTime`) all lives in
+  [`src/lib/portfolio-data.ts`](src/lib/portfolio-data.ts).
