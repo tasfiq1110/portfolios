@@ -34,7 +34,7 @@ export const profile = {
     youtube: "https://www.youtube.com/@tasfiq1110",
     fab: "https://www.fab.com/sellers/Tasfiqur%20Rahman",
   },
-  cv: "/files/Mohammed_Tasfiqur_Rahman_CV%20.pdf",
+  cv: "/files/Mohammed_Tasfiqur_Rahman_CV.pdf",
   photos: {
     cinematic: "/images/portrait-cinematic.jpg",
   },

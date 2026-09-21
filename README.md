@@ -45,7 +45,6 @@ To update content (projects, experience, skills, copy), edit
 
 ## Replace before going live
 
-- `public/files/Mohammed_Tasfiqur_Rahman_CV.pdf` — drop your real CV here.
 - The `metadataBase` URL in `src/app/layout.tsx` once the production domain is known.
 
 ## Content notes
