@@ -1,0 +1,11 @@
+# Normalise text line endings, and keep binaries byte-exact across platforms.
+* text=auto
+
+*.pdf   binary
+*.docx  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
