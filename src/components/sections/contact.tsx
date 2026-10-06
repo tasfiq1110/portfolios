@@ -48,7 +48,7 @@ export function Contact() {
         <div className="mb-16 grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <SectionHeading
-              chapter="07"
+              chapter="08"
               eyebrow="Contact"
               title="Let's build something."
               description="Hiring for a gameplay, tools or VR role? Tell me about the team and the problem — I read every message myself."

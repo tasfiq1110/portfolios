@@ -136,7 +136,7 @@ export const skillNodes: SkillNode[] = [
     category: "Platforms",
     icon: Headset,
     content:
-      "Meta Quest interaction systems, controller input and locomotion, with a focus on comfort and stable performance.",
+      "VR interaction systems, controller input and locomotion, with a focus on comfort and stable performance — including demo work produced for Samsung.",
     relatedIds: [6, 7],
   },
   {
@@ -436,6 +436,52 @@ export const plugins: Plugin[] = [
   },
 ];
 
+export type VrVideo = {
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tech: string[];
+  youtubeId: string;
+  glow: "blue" | "purple" | "green" | "red" | "orange";
+  featured?: boolean;
+};
+
+/** Demo VR work produced for Samsung — interaction, environments and gameplay built in Unreal Engine. */
+export const vrVideos: VrVideo[] = [
+  {
+    slug: "vr-reel-1",
+    title: "VR Interaction & Locomotion",
+    subtitle: "Samsung demo — hand presence and movement",
+    description:
+      "A VR demo produced for Samsung: grab, interaction and locomotion systems built in Unreal Engine — tuned for comfort and a steady frame budget on standalone headset hardware.",
+    tech: ["Unreal Engine", "VR", "Samsung", "C++"],
+    youtubeId: "YRzphmJww2U",
+    glow: "purple",
+    featured: true,
+  },
+  {
+    slug: "vr-reel-2",
+    title: "Immersive VR Environment",
+    subtitle: "Samsung demo — world and presence",
+    description:
+      "An immersive VR environment produced for Samsung, with interactive elements and spatial UI, optimized to hold performance on mobile VR hardware.",
+    tech: ["Unreal Engine", "VR", "Samsung", "Optimization"],
+    youtubeId: "j_1D823zUmw",
+    glow: "blue",
+  },
+  {
+    slug: "vr-reel-3",
+    title: "VR Gameplay Demo",
+    subtitle: "Samsung demo — interaction and mechanics",
+    description:
+      "A gameplay-focused VR demo produced for Samsung, showing controller input, interaction mechanics and feedback designed around VR comfort.",
+    tech: ["Unreal Engine", "VR", "Samsung", "Gameplay"],
+    youtubeId: "qE__55SmamE",
+    glow: "green",
+  },
+];
+
 export const highlights: { label: string; value: string; hint?: string }[] = [
   { label: "Years in Unreal", value: `${profile.experienceYears}+`, hint: "UE4 & UE5, C++ and Blueprint" },
   { label: "Shipped projects", value: `${projects.length}`, hint: "Games, prototypes and systems" },
@@ -558,6 +604,7 @@ export const navItems = [
   { label: "Strengths", href: "#capabilities" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "VR", href: "#vr" },
   { label: "Plugins", href: "#plugins" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
