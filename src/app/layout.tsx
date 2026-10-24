@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScroll } from "@/components/ui/smooth-scroll";
-import { Cursor } from "@/components/ui/cursor";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { profile } from "@/lib/portfolio-data";
 
-// Per ui-ux-pro-max: "Minimalist Portfolio" pairing — distinctive headers + clean body
 const display = Space_Grotesk({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -34,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | Tasfiqur Rahman",
   },
   description:
-    "Team Lead and Unreal Engine developer with 6+ years shipping gameplay, AI, multiplayer and VR in C++ and Blueprint. Steam releases, Meta Quest apps, four plugins published on Fab, and gameplay work on PIXO. Open to senior and lead roles, remote or on-site.",
+    "Team Lead and Unreal Engine developer with 6+ years shipping gameplay, AI, multiplayer, VR and architectural visualization in C++ and Blueprint. Steam releases, Meta Quest apps, four plugins published on Fab, and gameplay work on PIXO. Open to senior and lead roles, remote or on-site.",
   keywords: [
     "Unreal Engine",
     "UE5",
@@ -51,6 +48,8 @@ export const metadata: Metadata = {
     "Gameplay Programmer",
     "Multiplayer Programmer",
     "Meta Quest",
+    "Architectural Visualization",
+    "ArcViz",
     "Tasfiqur Rahman",
   ],
   authors: [{ name: "Mohammed Tasfiqur Rahman" }],
@@ -104,6 +103,7 @@ export default function RootLayout({
                 "Multiplayer Networking",
                 "Virtual Reality",
                 "Niagara VFX",
+                "Architectural Visualization",
               ],
               sameAs: [
                 profile.socials.github,
@@ -124,11 +124,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SmoothScroll>
-            <ScrollProgress />
-            <Cursor />
-            {children}
-          </SmoothScroll>
+          <ScrollProgress />
+          {children}
         </ThemeProvider>
       </body>
     </html>

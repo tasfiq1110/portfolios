@@ -1,14 +1,8 @@
 import {
   Gamepad2,
-  Cpu,
   Sparkles,
-  Box,
-  Headset,
-  Network,
   Code2,
-  Workflow,
   Puzzle,
-  BrainCircuit,
   Gauge,
   Users,
   Rocket,
@@ -25,7 +19,7 @@ export const profile = {
   location: "Dhaka, Bangladesh",
   coordinates: "23.8103° N, 90.4125° E",
   email: "tasfiqur1110@gmail.com",
-  availability: "Open to full-time, contract and remote roles.",
+  availability: "Open to full-time, contract and remote roles",
   experienceYears: 6,
   socials: {
     github: "https://github.com/tasfiq1110",
@@ -52,111 +46,8 @@ export const profile = {
 } as const;
 
 export const summary = [
-  "I'm an Unreal Engine developer with 6+ years of experience in gameplay programming, AI, multiplayer and VR. I currently lead metaverse and VR development at Future Studio Bangladesh, where I own architecture decisions and mentor the engineers who build on them.",
-  "I've shipped single-player narrative games on Steam, built server-authoritative multiplayer systems and delivered Meta Quest experiences that hold frame budget on mobile hardware. I work fluently in C++ and Blueprint, and I'm the person teams bring in to debug the hard bug and get the build back under budget.",
-  "Alongside studio work I build and sell Unreal Engine plugins on Fab — killcam replay, on-device LLMs for NPCs, volumetric pathfinding and editor-side sound generation — and I contribute gameplay work to PIXO, an open-world action adventure now in public demo.",
-];
-
-export type SkillNode = {
-  id: number;
-  title: string;
-  category: string;
-  icon: LucideIcon;
-  content: string;
-  relatedIds: number[];
-};
-
-export const skillNodes: SkillNode[] = [
-  {
-    id: 1,
-    title: "C++ Gameplay",
-    category: "Core Engineering",
-    icon: Code2,
-    content:
-      "Gameplay systems in C++, including actor components, replication, custom subsystems and performance optimization.",
-    relatedIds: [2, 3, 7, 9],
-  },
-  {
-    id: 2,
-    title: "Blueprints",
-    category: "Core Engineering",
-    icon: Workflow,
-    content:
-      "Reusable Blueprint systems, function libraries and interfaces that designers can configure through data assets.",
-    relatedIds: [1, 3],
-  },
-  {
-    id: 3,
-    title: "AI Systems",
-    category: "Gameplay AI",
-    icon: Cpu,
-    content:
-      "AI behaviour using Behaviour Trees, EQS, blackboards and perception, with custom services and decorators.",
-    relatedIds: [1, 4, 10],
-  },
-  {
-    id: 4,
-    title: "Niagara VFX",
-    category: "Graphics",
-    icon: Sparkles,
-    content:
-      "Niagara emitters, GPU particles and ribbons, connected to gameplay events and animation.",
-    relatedIds: [3, 5, 6],
-  },
-  {
-    id: 5,
-    title: "Lumen / Nanite",
-    category: "Graphics",
-    icon: Box,
-    content:
-      "UE5 lighting and geometry workflows using Lumen, Nanite and post-processing, with attention to performance budgets.",
-    relatedIds: [4, 6],
-  },
-  {
-    id: 6,
-    title: "Optimization",
-    category: "Graphics",
-    icon: Gamepad2,
-    content:
-      "CPU and GPU profiling, draw-call reduction, LODs and asynchronous loading to improve frame times on target hardware.",
-    relatedIds: [4, 5, 8],
-  },
-  {
-    id: 7,
-    title: "Multiplayer",
-    category: "Networking",
-    icon: Network,
-    content:
-      "Replication, RPCs and server-authoritative gameplay for multiplayer systems and prototypes.",
-    relatedIds: [1, 8],
-  },
-  {
-    id: 8,
-    title: "VR / Meta Quest",
-    category: "Platforms",
-    icon: Headset,
-    content:
-      "VR interaction systems, controller input and locomotion, with a focus on comfort and stable performance — including demo work produced for Samsung.",
-    relatedIds: [6, 7],
-  },
-  {
-    id: 9,
-    title: "Engine Plugins",
-    category: "Tools & Plugins",
-    icon: Puzzle,
-    content:
-      "C++ plugins for Unreal Engine, including runtime replay systems, editor tools and Blueprint APIs. Published on Fab.",
-    relatedIds: [1, 10, 3],
-  },
-  {
-    id: 10,
-    title: "On-Device AI",
-    category: "Tools & Plugins",
-    icon: BrainCircuit,
-    content:
-      "Local LLM integration for NPC dialogue, gameplay tool calls and structured JSON output, plus sound generation on Vulkan GPUs.",
-    relatedIds: [9, 3],
-  },
+  "I'm an Unreal Engine developer with 6+ years in gameplay programming, AI, multiplayer and VR. I lead metaverse and VR development at Future Studio Bangladesh, where I own the architecture decisions and mentor the engineers who build on them.",
+  "I've shipped narrative games on Steam, built server-authoritative multiplayer, delivered Meta Quest experiences that hold frame budget on mobile hardware, and produced real-time architectural visualization in UE5. Alongside studio work I publish Unreal plugins on Fab — killcam replay, on-device LLMs for NPCs, volumetric pathfinding and editor sound generation — and contribute gameplay work to PIXO, an open-world action adventure now in public demo.",
 ];
 
 export const skillGroups = [
@@ -182,6 +73,7 @@ export const skillGroups = [
       "Materials, Shaders, Procedural FX",
       "Lighting, Post-Processing, Cinematics",
       "Lumen / Nanite Workflow",
+      "Architectural Visualization (ArcViz)",
       "Performance Optimization",
       "GPU Profiling & Debugging",
     ],
@@ -436,6 +328,29 @@ export const plugins: Plugin[] = [
   },
 ];
 
+/**
+ * Architectural visualization work produced at Future Studio Bangladesh.
+ *
+ * NOTE: the copy below describes standard UE5 ArcViz technique. Adjust the
+ * `description`, `highlights` and `tech` lines to match exactly what this
+ * project involved before sharing the site widely.
+ */
+export const arcviz = {
+  title: "Architectural Visualization",
+  subtitle: "Future Studio — real-time ArcViz in Unreal Engine 5",
+  youtubeId: "ZwJse6sG1dc",
+  link: "https://youtu.be/ZwJse6sG1dc",
+  description:
+    "An architectural visualization project built at Future Studio in Unreal Engine 5 — presented as a real-time, navigable walkthrough rather than a pre-rendered video, so spaces, materials and lighting can be reviewed live with a client.",
+  highlights: [
+    "Interiors and exteriors lit with Lumen global illumination, so bounce light and reflections resolve in real time",
+    "Nanite geometry for dense architectural models and furnishing, without a manual LOD pass",
+    "Cinematic camera walkthrough authored in Sequencer, alongside a free-navigation mode for client review",
+    "Physically based materials and a calibrated lighting setup, tuned to hold a steady frame rate while presenting",
+  ],
+  tech: ["Unreal Engine 5", "Lumen", "Nanite", "Sequencer", "ArcViz"],
+} as const;
+
 export type VrVideo = {
   slug: string;
   title: string;
@@ -484,7 +399,7 @@ export const vrVideos: VrVideo[] = [
 
 export const highlights: { label: string; value: string; hint?: string }[] = [
   { label: "Years in Unreal", value: `${profile.experienceYears}+`, hint: "UE4 & UE5, C++ and Blueprint" },
-  { label: "Shipped projects", value: `${projects.length}`, hint: "Games, prototypes and systems" },
+  { label: "Projects & prototypes", value: `${projects.length}`, hint: "Games, demos and systems" },
   { label: "Plugins on Fab", value: String(plugins.length), hint: "Sold to other UE developers" },
   { label: "Platforms", value: "PC · Quest", hint: "Steam releases and Meta Quest VR" },
 ];
@@ -553,6 +468,7 @@ export const experience: Experience[] = [
     details: [
       "Lead metaverse and VR development in Unreal Engine 5.",
       "Build avatar systems, voice chat, social hubs and virtual economies for multiplayer worlds.",
+      "Deliver real-time architectural visualization in UE5, using Lumen and Nanite for client-facing walkthroughs.",
       "Work with international teams on marketplace integration and gamified learning features.",
     ],
   },
@@ -600,12 +516,11 @@ export const certifications = [
 ];
 
 export const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Strengths", href: "#capabilities" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
+  { label: "Work", href: "#work" },
+  { label: "ArcViz", href: "#arcviz" },
   { label: "VR", href: "#vr" },
   { label: "Plugins", href: "#plugins" },
+  { label: "Expertise", href: "#expertise" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];

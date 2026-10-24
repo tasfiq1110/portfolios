@@ -5,8 +5,6 @@ import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
-  /** Two-digit chapter marker, e.g. "01" — adds storytelling thread */
-  chapter?: string;
   eyebrow?: string;
   title: string;
   description?: string;
@@ -15,7 +13,6 @@ interface SectionHeadingProps {
 }
 
 export function SectionHeading({
-  chapter,
   eyebrow,
   title,
   description,
@@ -35,26 +32,17 @@ export function SectionHeading({
         className
       )}
     >
-      {(chapter || eyebrow) && (
+      {eyebrow && (
         <div
           className={cn(
             "mb-5 flex items-center gap-3",
             align === "center" && "justify-center"
           )}
         >
-          {chapter && (
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-              {chapter}
-            </span>
-          )}
-          {chapter && eyebrow && (
-            <span className="h-px w-8 bg-border" />
-          )}
-          {eyebrow && (
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-              {eyebrow}
-            </span>
-          )}
+          <span className="h-px w-8 bg-primary/60" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            {eyebrow}
+          </span>
         </div>
       )}
 

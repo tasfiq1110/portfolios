@@ -77,7 +77,7 @@ export function Nav() {
             size="sm"
             className="hidden sm:inline-flex rounded-full"
           >
-            <a href="#contact">Hire me</a>
+            <a href="#contact">Get in touch</a>
           </Button>
           <button
             type="button"
@@ -128,7 +128,7 @@ export function Nav() {
                 onClick={() => setOpen(false)}
                 className="mt-2 rounded-xl bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground"
               >
-                Hire me
+                Get in touch
               </a>
             </div>
           </motion.div>

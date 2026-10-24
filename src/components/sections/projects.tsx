@@ -287,11 +287,10 @@ export function Projects() {
   const rest = projects.filter((p) => !p.featured && !p.flagship);
 
   return (
-    <section id="projects" className="relative py-24 sm:py-32">
+    <section id="work" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <div className="flex items-end justify-between gap-6">
           <SectionHeading
-            chapter="04"
             eyebrow="Selected Work"
             title="Games and gameplay systems."
             description="Shipped games, prototypes and the systems underneath them. Every card links to real footage."

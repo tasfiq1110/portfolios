@@ -40,8 +40,8 @@ function VrMedia({ video }: { video: VrVideo }) {
       className="group/play relative block aspect-video w-full overflow-hidden rounded-xl bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       {!loaded && !failed && <span className="absolute inset-0 skeleton" />}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       {!failed && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={`https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`}
           alt=""
@@ -142,7 +142,6 @@ export function VR() {
     <section id="vr" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
         <SectionHeading
-          chapter="05"
           eyebrow="Immersive / Meta Quest"
           title="VR experiences, built for headsets."
           description="Demo VR work produced for Samsung — interaction, locomotion and immersive environments built in Unreal Engine and tuned to hold frame budget on standalone VR hardware. Press play to watch inline."
