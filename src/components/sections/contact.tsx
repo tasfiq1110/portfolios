@@ -45,30 +45,44 @@ export function Contact() {
   return (
     <section id="contact" className="relative py-24 sm:py-32">
       <div className="container mx-auto">
-        <div className="mb-16 grid gap-8 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <SectionHeading
-              chapter="08"
-              eyebrow="Contact"
-              title="Let's build something."
-              description="Hiring for a gameplay, tools or VR role? Tell me about the team and the problem — I read every message myself."
-            />
-          </div>
-          <div className="md:col-span-5">
-            <div className="flex flex-wrap items-center gap-3 md:justify-end">
-              <button
-                type="button"
-                onClick={copyEmail}
-                className="group flex items-center gap-2 rounded-full border border-border bg-card/40 px-4 py-2 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-              >
-                <span>{profile.email}</span>
-                {copied ? (
-                  <Check size={12} className="text-primary" />
-                ) : (
-                  <Copy size={12} className="opacity-60 group-hover:opacity-100" />
-                )}
-              </button>
-            </div>
+        <div className="mb-14">
+          <SectionHeading
+            eyebrow="Contact"
+            title="Let's talk about the role."
+            description="Hiring for a gameplay, tools, VR or ArcViz role? Tell me about the team and the problem — I read every message myself."
+          />
+
+          {/* The fastest path first: the address, big, with one-click copy. */}
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button asChild size="xl" className="group">
+              <a href={`mailto:${profile.email}`}>
+                <Mail size={16} className="mr-2" />
+                {profile.email}
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="xl"
+              onClick={copyEmail}
+              className="group"
+            >
+              {copied ? (
+                <>
+                  <Check size={15} className="mr-2 text-primary" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Copy size={15} className="mr-2 opacity-70 group-hover:opacity-100" />
+                  Copy address
+                </>
+              )}
+            </Button>
+            <span className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock size={14} className="text-primary" />
+              {profile.responseTime}
+            </span>
           </div>
         </div>
 
@@ -81,6 +95,9 @@ export function Contact() {
             transition={{ duration: 0.6 }}
             className="rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm sm:p-8 lg:col-span-7"
           >
+            <h3 className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              Or draft a message here
+            </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field name="name" label="Name" placeholder="Your name" required />
@@ -153,13 +170,9 @@ export function Contact() {
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="flex flex-col rounded-3xl border border-border bg-card/40 p-6 backdrop-blur-sm">
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                     Open to
-                  </span>
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-70" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                   </span>
                 </div>
                 <ul className="space-y-2">
@@ -183,11 +196,7 @@ export function Contact() {
                     </span>
                   ))}
                 </div>
-                <p className="mt-5 flex items-center gap-2 border-t border-border/60 pt-4 text-xs text-muted-foreground">
-                  <Clock size={12} className="shrink-0 text-primary" />
-                  {profile.responseTime}
-                </p>
-                <Button asChild variant="outline" className="group mt-4 w-full">
+                <Button asChild variant="outline" className="group mt-6 w-full">
                   <a href={profile.cv} target="_blank" rel="noreferrer" download>
                     <FileDown size={14} className="mr-2 transition-transform group-hover:translate-y-0.5" />
                     Download résumé

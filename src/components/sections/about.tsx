@@ -5,15 +5,9 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Download, ArrowUpRight, MapPin } from "lucide-react";
 import { SectionHeading } from "./section-heading";
-import { Reveal, Counter } from "@/components/ui/reveal";
+import { Reveal } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
-import { highlights, summary, profile } from "@/lib/portfolio-data";
-
-function parseHighlight(value: string): { num: number; suffix: string } {
-  const match = value.match(/^([0-9.]+)(.*)$/);
-  if (!match) return { num: 0, suffix: value };
-  return { num: parseFloat(match[1]), suffix: match[2] };
-}
+import { summary, profile } from "@/lib/portfolio-data";
 
 export function About() {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -81,26 +75,11 @@ export function About() {
                   }}
                 />
 
-                {/* HUD corners */}
-                <span className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l border-t border-white/60" />
-                <span className="pointer-events-none absolute right-3 top-3 h-3 w-3 border-r border-t border-white/60" />
-                <span className="pointer-events-none absolute bottom-3 left-3 h-3 w-3 border-b border-l border-white/60" />
-                <span className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b border-r border-white/60" />
-
-                {/* Bottom-left label */}
-                <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 backdrop-blur-sm">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
+                {/* Name plate */}
+                <div className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 backdrop-blur-sm">
+                  <span className="text-xs font-medium text-white/90">
                     {profile.shortName}
                   </span>
-                </div>
-
-                {/* Top-right meta */}
-                <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.3em] text-white/80 backdrop-blur-sm">
-                  Dhaka, Bangladesh
                 </div>
               </motion.div>
 
@@ -111,11 +90,7 @@ export function About() {
                     <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
                       Currently
                     </span>
-                    <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-primary">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inset-0 animate-ping rounded-full bg-primary opacity-70" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                      </span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
                       Team Lead
                     </span>
                   </div>
@@ -128,7 +103,6 @@ export function About() {
           {/* Right — content */}
           <div className="space-y-8 lg:col-span-7">
             <SectionHeading
-              chapter="01"
               eyebrow="About"
               title="Gameplay, tools and the people who ship them."
             />
@@ -142,43 +116,6 @@ export function About() {
                 </Reveal>
               ))}
             </div>
-
-            <Reveal delay={0.2}>
-              <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-4">
-                {highlights.map((h) => {
-                  const { num, suffix } = parseHighlight(h.value);
-                  return (
-                    <div
-                      key={h.label}
-                      className="group relative bg-background p-5 transition-colors hover:bg-card"
-                    >
-                      <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                        {h.label}
-                      </dt>
-                      <dd className={`${num > 0 ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"} mt-2 font-bold tracking-tight`}>
-                        {Number.isFinite(num) && num > 0 ? (
-                          <>
-                            <Counter value={num} />
-                            <span className="text-primary">{suffix}</span>
-                          </>
-                        ) : (
-                          h.value
-                        )}
-                      </dd>
-                      {h.hint && (
-                        <p className="mt-2 text-[11px] leading-snug text-muted-foreground/80">
-                          {h.hint}
-                        </p>
-                      )}
-                      <span
-                        aria-hidden
-                        className="absolute bottom-0 left-0 h-px w-0 bg-primary transition-all duration-500 group-hover:w-full"
-                      />
-                    </div>
-                  );
-                })}
-              </dl>
-            </Reveal>
 
             <Reveal delay={0.3}>
               <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -197,8 +134,8 @@ export function About() {
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="group">
-                  <a href="#projects">
-                    See projects
+                  <a href="#work">
+                    See the work
                     <ArrowUpRight
                       size={16}
                       className="ml-2 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
