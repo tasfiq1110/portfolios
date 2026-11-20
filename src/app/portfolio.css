@@ -30,8 +30,8 @@
 .skip { position: absolute; transform: translateY(-150%); background: var(--paper); z-index: 2; }
 .skip:focus { transform: none; }
 .intro { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: clamp(2rem,6vw,6rem); padding: clamp(3rem,6vw,6rem) 0; }
-.caption, .location, .reels small { font-family: var(--font-mono), monospace; color: var(--soft); }
-.caption, .reels small { font-size: .8125rem; letter-spacing: .055em; text-transform: uppercase; }
+.caption, .location { font-family: var(--font-mono), monospace; color: var(--soft); }
+.caption { font-size: .8125rem; letter-spacing: .055em; text-transform: uppercase; }
 .accent, h1 span, .folio h2 span { color: var(--accent); }
 .folio h1, .folio h2, .folio h3 { line-height: 1.04; font-weight: 610; letter-spacing: -.055em; }
 .folio h1 { font-size: clamp(4rem,7.9vw,7.3rem); line-height: .95; margin: 1.3rem 0; }
@@ -47,24 +47,25 @@
 .section { padding-block: clamp(2.5rem,5vw,5rem); border-top: 1px solid var(--line); }
 .folio h2 { font-size: clamp(2.4rem,5vw,4rem); margin-bottom: 1.7rem; }
 .folio h3 { font-size: clamp(1.45rem,2.4vw,2rem); margin: .5rem 0; }
-.games, .catalog, .reels { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.4rem; }
+.games { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.4rem; }
 .game-card { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
 .game-card video, .deliver-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.youtube-preview { display: block; width: 100%; aspect-ratio: 16/9; border: 0; background: #171917; }
+.poster { position: relative; overflow: hidden; }
+.poster img { width: 100%; height: 100%; object-fit: cover; }
+.poster span { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 3.8rem; height: 2.7rem; color: white; background: #171917de; border-radius: .7rem; }
+.poster:hover span, .poster:focus-visible span { background: #c00; }
+.folio .poster:focus-visible { outline-offset: -4px; }
 .deliver-cover { display: grid; align-items: end; padding: 6%; background: repeating-linear-gradient(125deg,transparent 0 22px,#ffe9cf20 22px 23px), linear-gradient(110deg,#592514,#c9592c); }
 .deliver-cover span { color: #ffe8ce; font-weight: 820; font-size: clamp(2rem,4.7vw,4.8rem); line-height: .88; letter-spacing: -.07em; }
-.card-copy, .catalog article { padding: clamp(1.15rem,2.4vw,2rem); }
-.card-copy > p:not(.caption), .catalog article > p:not(.caption), .skill p, .job ul, .qualification p, .contact p { color: var(--soft); line-height: 1.65; }
+.card-copy { padding: clamp(1.15rem,2.4vw,2rem); }
+.card-copy > p:not(.caption), .skill p, .job ul, .qualification p, .contact p { color: var(--soft); line-height: 1.65; }
 .caption span { opacity: .6; }
 .text-link { display: inline-block; margin-top: 1rem; text-decoration: underline; text-underline-offset: .25em; font-weight: 550; }
-.archive { margin-top: 1.4rem; border-block: 1px solid var(--line); }
 .folio summary { cursor: pointer; padding: 1rem 0; font-weight: 600; }
-.archive .catalog { margin-block: .5rem 1.4rem; }
-.catalog article, .reels a { border: 1px solid var(--line); border-radius: 8px; }
 .links { flex-wrap: wrap; margin-top: 1rem; }
 .links a { gap: .4rem; }
 .links .text-link { margin-top: 0; }
-.reels a { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: 1.25rem; font-weight: 600; }
-.reels small { display: block; margin-bottom: .3rem; }
 .split { display: grid; grid-template-columns: .85fr 1.4fr; gap: 2rem; }
 .job + .job { margin-top: 1.6rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
 .job ul { list-style: disc; padding-left: 1.15rem; margin-top: .65rem; }
@@ -81,6 +82,6 @@
   .split { gap: .3rem; }
 }
 @media (max-width: 600px) {
-  .games, .catalog, .reels { grid-template-columns: 1fr; }
+  .games { grid-template-columns: 1fr; }
   .deliver-cover span { font-size: clamp(2.8rem,12vw,4.5rem); }
 }
