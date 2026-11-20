@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
-import { ArrowUpRight, Play, Store } from "lucide-react";
+import { YouTubePreview } from "@/components/ui/youtube-preview";
+import { ArrowUpRight, Store } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeading } from "./section-heading";
 import { GlowCard } from "@/components/ui/spotlight-card";
@@ -9,49 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { plugins, fabStore, type Plugin } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
-
-function PreviewThumb({ plugin }: { plugin: Plugin }) {
-  const [loaded, setLoaded] = React.useState(false);
-  const [failed, setFailed] = React.useState(false);
-  return (
-    <a
-      href={`https://www.youtube.com/watch?v=${plugin.youtubeId}`}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Watch the ${plugin.title} preview video`}
-      className="group/thumb relative block aspect-video w-full overflow-hidden rounded-xl bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      {!loaded && !failed && <div className="absolute inset-0 skeleton" />}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {!failed && <img
-        src={`https://i.ytimg.com/vi/${plugin.youtubeId}/maxresdefault.jpg`}
-        alt=""
-        loading="lazy"
-        onLoad={() => setLoaded(true)}
-        onError={(e) => {
-          const img = e.currentTarget as HTMLImageElement;
-          if (!img.src.includes("hqdefault")) {
-            img.src = `https://i.ytimg.com/vi/${plugin.youtubeId}/hqdefault.jpg`;
-          } else {
-            setFailed(true);
-          }
-        }}
-        className="h-full w-full object-cover transition-transform duration-700 group-hover/thumb:scale-105"
-      />}
-      {failed && <span className="absolute inset-0 flex items-center justify-center p-6 text-center text-lg font-semibold">{plugin.title}</span>}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-      <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
-        <Play size={11} className="fill-current" />
-        Preview
-      </span>
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/thumb:opacity-100">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
-          <Play size={20} className="ml-1 fill-current" />
-        </span>
-      </div>
-    </a>
-  );
-}
 
 function PluginCard({ plugin, index }: { plugin: Plugin; index: number }) {
   return (
@@ -64,7 +21,7 @@ function PluginCard({ plugin, index }: { plugin: Plugin; index: number }) {
       className={cn("h-full min-w-0 scroll-mt-24", plugin.featured && "md:col-span-2 lg:col-span-3")}
     >
       <GlowCard glowColor={plugin.glow} className={cn("flex h-full flex-col p-5 sm:p-6", plugin.featured && "lg:grid lg:grid-cols-2 lg:items-center lg:gap-10 lg:p-8")}>
-        <div className="min-w-0"><PreviewThumb plugin={plugin} /></div>
+        <div className="min-w-0"><YouTubePreview id={plugin.youtubeId} title={plugin.title} /></div>
 
         <div className={cn("flex flex-1 flex-col", plugin.featured && "lg:py-2")}>
           <div className={cn("mt-5", plugin.featured && "lg:mt-0")}>

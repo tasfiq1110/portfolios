@@ -6,41 +6,10 @@ import { ArrowUpRight, Gamepad2, Globe, Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeading } from "./section-heading";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { Tilt } from "@/components/ui/tilt";
+import { YouTubePreview } from "@/components/ui/youtube-preview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { projects, type Project } from "@/lib/portfolio-data";
-
-function YouTubeThumb({ id, alt }: { id: string; alt: string }) {
-  const [loaded, setLoaded] = React.useState(false);
-  return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted">
-      {!loaded && <div className="absolute inset-0 skeleton" />}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
-        alt={alt}
-        loading="lazy"
-        onLoad={() => setLoaded(true)}
-        onError={(e) => {
-          const img = e.currentTarget;
-          if (!img.src.includes("hqdefault")) {
-            img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-          } else {
-            setLoaded(true);
-          }
-        }}
-        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg">
-          <Play size={20} className="ml-1 fill-current" />
-        </span>
-      </div>
-    </div>
-  );
-}
 
 /**
  * Poster-first media for the flagship card. The trailer is ~42 MB, so it is only
@@ -227,56 +196,51 @@ function ProjectCard({ project, featured }: { project: Project; featured?: boole
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="group block h-full min-w-0"
     >
-      <Tilt max={featured ? 6 : 5} lift={featured ? 8 : 6} className="h-full">
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noreferrer"
-          className="block h-full"
-        >
-          <GlowCard glowColor={project.glow} className="h-full p-5 sm:p-6">
-            {project.youtubeId && (
-              <YouTubeThumb id={project.youtubeId} alt={project.title} />
-            )}
-            <div className="mt-5 flex items-start justify-between gap-3">
-              <div className="min-w-0 flex-1">
-                <div className="mb-2 flex min-w-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              <span className="shrink-0">{project.year}</span>
-              <span className="shrink-0">·</span>
-              <span className="min-w-0 flex-1 truncate">{project.subtitle}</span>
-            </div>
-                <h3
-                  className={`truncate font-bold tracking-tight ${
-                    featured ? "text-xl sm:text-2xl" : "text-lg"
-                  }`}
-                >
-                  {project.title}
-                </h3>
-              </div>
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-all group-hover:border-primary group-hover:text-primary group-hover:rotate-[-12deg]">
-                <ArrowUpRight size={16} />
-              </span>
-            </div>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/80">
-              {project.role}
-            </p>
-            <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">
-              {project.description}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {project.tech.map((t) => (
-                <Badge
-                  key={t}
-                  variant="outline"
-                  className="border-border/60 font-mono text-[10px] font-normal uppercase tracking-wider text-muted-foreground"
-                >
-                  {t}
-                </Badge>
-              ))}
-            </div>
-          </GlowCard>
-        </a>
-      </Tilt>
+      <GlowCard glowColor={project.glow} className="h-full p-5 sm:p-6">
+        {project.youtubeId ? (
+          <YouTubePreview id={project.youtubeId} title={project.title + " — " + project.subtitle} />
+        ) : (
+          <a href={project.link} className="deliver-cover" aria-label={project.title + " on itch.io"}>
+            <span>THE LAST<br />DELIVER</span>
+          </a>
+        )}
+        <div className="mt-5 flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex min-w-0 items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+          {project.year && <span>{project.year} ·</span>}
+          <span className="min-w-0 flex-1 truncate">{project.subtitle}</span>
+        </div>
+            <h3
+              className={`truncate font-bold tracking-tight ${
+                featured ? "text-xl sm:text-2xl" : "text-lg"
+              }`}
+            >
+              <a href={project.link}>{project.title}</a>
+            </h3>
+          </div>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-all group-hover:border-primary group-hover:text-primary group-hover:rotate-[-12deg]">
+            <ArrowUpRight size={16} />
+          </span>
+        </div>
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/80">
+          {project.role}
+        </p>
+        <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">
+          {project.description}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.tech.map((t) => (
+            <Badge
+              key={t}
+              variant="outline"
+              className="border-border/60 font-mono text-[10px] font-normal uppercase tracking-wider text-muted-foreground"
+            >
+              {t}
+            </Badge>
+          ))}
+        </div>
+        <a className="mt-5 inline-block text-sm font-semibold text-primary underline underline-offset-4" href={project.link}>{project.liveLabel ?? "Watch on YouTube"}</a>
+      </GlowCard>
     </motion.div>
   );
 }
@@ -293,7 +257,7 @@ export function Projects() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Games and gameplay systems."
-            description="Shipped games, prototypes and the systems underneath them. Every card links to real footage."
+            description="Shipped games, prototypes and the systems underneath them. Explore each project below."
           />
         </div>
 

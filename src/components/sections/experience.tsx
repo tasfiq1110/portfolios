@@ -114,28 +114,16 @@ export function Experience() {
                     className="group relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-sm transition-colors hover:border-primary/40"
                     data-cursor-hover
                   >
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
-                      <Image
-                        src={c.image}
-                        alt={c.name}
-                        fill
-                        sizes="(min-width: 1024px) 28vw, 90vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/20 to-transparent"
-                      />
-                      <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        <ExternalLink size={12} />
+                    <a href={c.image} className="block p-3" aria-label={`Open full-size certificate from ${c.issuer}`}>
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-white">
+                        <Image src={c.image} alt={c.name + " — " + c.issuer} fill
+                          sizes="(min-width: 1024px) 28vw, 90vw" className="object-contain" />
                       </div>
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <h4 className="text-sm font-semibold tracking-tight text-foreground">
-                          {c.name}
-                        </h4>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between p-4 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                      <h4 className="mt-4 flex items-center justify-between gap-2 text-base font-semibold">
+                        {c.name}<ExternalLink size={16} aria-hidden="true" />
+                      </h4>
+                    </a>
+                    <div className="flex items-center justify-between gap-3 px-3 pb-4 text-sm text-muted-foreground">
                       <span>{c.issuer}</span>
                       <span className="text-primary">{c.year}</span>
                     </div>

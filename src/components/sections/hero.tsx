@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -59,6 +60,7 @@ export function Hero() {
       />
 
       <div className="container mx-auto">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="max-w-3xl">
           {/* Availability — readable, not decorative micro-type */}
           <div
@@ -165,6 +167,12 @@ export function Hero() {
               </a>
             </span>
           </div>
+        </div>
+
+          <figure className="relative mx-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-3xl border border-emerald-200/20 shadow-2xl shadow-emerald-950/40 lg:aspect-[4/5]">
+            <Image src={profile.photos.cinematic} alt={profile.name} fill priority
+              sizes="(min-width: 1024px) 38vw, 90vw" className="object-cover" />
+          </figure>
         </div>
 
         {/* Credibility numbers */}
