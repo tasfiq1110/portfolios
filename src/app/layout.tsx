@@ -1,29 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Archivo, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { profile } from "@/lib/portfolio-data";
 
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-const sans = Archivo({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-sans",
-  display: "swap",
-});
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
+const sans = localFont({ src: "./fonts/GeistVF.woff", variable: "--font-sans", weight: "100 900" });
+const mono = localFont({ src: "./fonts/GeistMonoVF.woff", variable: "--font-mono", weight: "100 900" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://portfolios-liard.vercel.app"),
   title: {
@@ -116,7 +99,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${display.variable} ${sans.variable} ${mono.variable} font-sans antialiased`}
+        className={`${sans.variable} ${mono.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"

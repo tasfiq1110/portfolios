@@ -109,7 +109,7 @@ export type Project = {
   slug: string;
   title: string;
   subtitle: string;
-  year: string;
+  year?: string;
   /** What I personally owned on this project — the first thing a hiring manager looks for. */
   role: string;
   description: string;
@@ -157,6 +157,18 @@ export const projects: Project[] = [
     glow: "purple",
     featured: true,
     flagship: true,
+  },
+  {
+    slug: "the-last-deliver",
+    title: "The Last Deliver",
+    subtitle: "Godot game",
+    role: "Game developer",
+    description: "A game I built with Godot, available on itch.io.",
+    tech: ["Godot"],
+    link: "https://tasfiqur1110.itch.io/the-last-deliver",
+    liveLabel: "View on itch.io",
+    glow: "orange",
+    featured: true,
   },
   {
     slug: "muktijuddho-rajarbag",
